@@ -1,0 +1,55 @@
+notes:
+
+visualization timeline?
+healer comp dropdowns
+cooldowns
+boss ability dropdowns
+cooldowns not usable if not off cd (need to store ability details)
+
+drag and drop?
+
+User Statement
+
+As a User of Temporal Boon, I need the ability to:
+1. Read the abilities, Spell ID, Description, and Frequency/Trigger of each boss in the raid
+2. View an example chart of damage distributions from spells
+3. Create a plan for my healers and when they need to use their cds
+4. View other links (logs, video, boss guide)
+
+plans -
+dropdown
+1. react table - hard coded data fed in
+
+redux:
+
+normalized data w/ reselect
+
+raids = {
+	theEternalPalace: [
+		...bosses
+        ]
+}
+
+bosses = {
+	abyssalCommanderSivara: {
+		spells: [
+			'toxicBrand',
+			'frostMark'
+		]
+	},
+	...
+}
+
+bossSpells = {
+	toxicBrand: {
+		name: 'Toxic Brand',
+		spellId: 294715,
+		description: 'brand that is toxic',
+		frequencyOrTrigger: 'applied at beginning of the encounter'
+	},
+	frostMark: {
+		...
+	},
+	...
+}
+
