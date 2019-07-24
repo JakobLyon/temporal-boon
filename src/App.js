@@ -2,25 +2,35 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Select from 'react-select';
+
+const items = [
+  {value: 'Abyssal Commander Sivara'},
+  {value: 'Blackwater Behemoth'},
+  {value: 'Radiance of Azshara'},
+  {value: 'Lady Ashvane'},
+  {value: 'Orgozoa'},
+  {value: 'Queens Court'},
+  {value: `Za'qul`},
+  {value: 'Queen Azshara'}
+]
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+]
+
+class App extends React.Component {
+  state = {
+    value: ''
+  }
+
+  render() {
+    return (
+      <Select options={options} />
+    )
+  }
 }
 
 export default App;

@@ -53,3 +53,8 @@ bossSpells = {
 	...
 }
 
+todo:
+1. open dropdown with pepe icon
+2. style
+3. label
+4. make dropdown its own component
