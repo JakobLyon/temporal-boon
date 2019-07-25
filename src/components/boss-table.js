@@ -10,18 +10,6 @@ const mapStateToProps = state => ({
 
 });
 
-const exampleSpells = [{
-  name: 'Toxic Brand',
-  spellId: 294715,
-  description: 'brand of toxic',
-  frequencyOrTrigger: 'often'
-}, {
-  name: 'Frost Mark',
-  spellId: 294711,
-  description: 'mark of frost',
-  frequencyOrTrigger: 'sometimes'
-}];
-
 const columns = [{
   Header: 'Spell Name',
   accessor: 'name'
@@ -40,5 +28,7 @@ export const BossTable = connect(mapStateToProps)(({spells}) => (
  <ReactTable
   data={spells}
   columns={columns}
+  minRows={0}
+  showPagination={false}
  />
 ));
