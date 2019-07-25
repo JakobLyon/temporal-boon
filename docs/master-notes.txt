@@ -66,3 +66,4 @@ include react table
 setup some basic structure
 merge to master
 setup bosses + spells in redux + selectors
+
