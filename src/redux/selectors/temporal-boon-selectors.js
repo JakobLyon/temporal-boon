@@ -11,3 +11,6 @@ export const getSpellsByBoss = createSelector([selectedBoss, getBosses, getSpell
   }
   return Object.values(spells).filter(spell => bosses[selectedBoss].spells.includes(spell.name))
 });
+
+export const getHealers = state => state.healers;
+export const getActiveHealers = state => state.activeHealers;

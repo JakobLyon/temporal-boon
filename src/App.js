@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { ActiveHealerDropdowns } from './components/active-healer-dropdowns';
 
 import Select from 'react-select';
 import { createStore } from 'redux';
@@ -34,7 +35,8 @@ class App extends React.Component {
         <BossDropdown
           options={items}
         />
-        <BossTable/>
+        <BossTable />
+        <ActiveHealerDropdowns />
       </Provider>
     )
   }

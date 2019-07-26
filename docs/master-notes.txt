@@ -67,3 +67,100 @@ setup some basic structure
 merge to master
 setup bosses + spells in redux + selectors
 
+healer types + their big cds
+
+paladin-
+* aura mastery
+* avenging wrath
+* holy wings
+
+shaman -
+* healing tide totem
+* mistress' water
+* magic tsunami
+
+Use Case -
+As a user, I need to be able to select which healers i have in my raid
+
+multiselect?
+
+healers = ['holyPaladin', 'restoShaman']
+
+cdsByHealer = {
+	'holyPaladin': [
+		'aura mastery',
+		'avenging wrath',
+		'holy wings'
+	],
+	'restoShaman': [
+		'healing tide totem',
+		'gamer girl bath water',
+		'magic tsunami'
+	]
+}
+
+cds = {
+	'aura mastery': {
+		name: 'Aura Mastery'
+		// other data
+	},
+	'avenging wrath': {
+		name: 'Avenging Wrath'
+	}
+}
+
+// add to each time we add a healer
+// when removing a healer, remove only their cds
+cdsToPlot = {
+
+}
+
+cdsToPlotReducer = (state, action) {
+	switch (action.type) {
+		case 
+	}
+}
+
+Use case -
+As a user, I need to be able to plot my healers cds
+
+healerTypes = {
+	'hpal': {
+		type: 'hpal',
+		cds: [
+			'aura mastery',
+			'avenging wrath'
+		]
+	},
+	'restoShaman': {
+		type: 'restoShaman',
+		cds: [
+			'healing tide totem',
+			'gamer girl bath water'
+		]
+	}
+}
+
+currentHealers = [
+	{
+		id: 1,
+		spec: 'hpal',
+		cds: [
+			'aura mastery',
+			'avenging wrath'
+		]
+	},
+	{...},
+	...
+]
+
+availableCds = [
+	'aura mastery 1',
+	'avenging wrath 1',
+	'aura mastery 2',
+	'avenging wrath 2'
+];
+
+mappedCds = [
+	'aura mastery 1'
+];

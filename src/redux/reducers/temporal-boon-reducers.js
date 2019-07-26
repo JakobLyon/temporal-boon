@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux';
-import { SET_BOSS } from '../actions/temporal-boon-actions';
+import {
+  SET_BOSS,
+  ADD_ACTIVE_HEALER,
+  CHANGE_ACTIVE_HEALER
+} from '../actions/temporal-boon-actions';
 
 const currentRaid = 'The Eternal Palace';
 const currentBoss = 'Abyssal Commander Sivara';
@@ -60,6 +64,18 @@ const spells = {
   }
 }
 
+const healers = ['Holy Paladin', 'Resto Shaman', 'Disc Priest'];
+
+const updateActiveHealers = (state, healerToRemove, healerToAdd) => {
+  const newState = [...state, healerToAdd];
+  // This causes the first element be removed, since I'm using the healers as basic strings this causes some weird reordering
+  const index = newState.indexOf(healerToRemove);
+  if (index > -1) {
+    newState.splice(index, 1);
+  }
+  return newState;
+}
+
 const selectedRaidReducer = (state = currentRaid, action) => {
   return state;
 }
@@ -81,9 +97,22 @@ const spellsReducer = (state = spells, action) => {
   return state;
 }
 
+const activeHealersReducer = (state = [], action) => {
+  switch (action.type) {
+    case ADD_ACTIVE_HEALER:
+      return [...state, action.activeHealer];
+    case CHANGE_ACTIVE_HEALER:
+      return updateActiveHealers(state, action.healerToRemove, action.healerToAdd)
+    default:
+      return state;
+  }
+};
+
 export const temporalBoonReducers = combineReducers({
  selectedRaid: selectedRaidReducer,
  selectedBoss: selectedBossReducer,
  bosses: bossesReducer,
- spells: spellsReducer
+ spells: spellsReducer,
+ healers: () => healers,
+ activeHealers: activeHealersReducer
 });
