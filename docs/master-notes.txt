@@ -164,3 +164,12 @@ availableCds = [
 mappedCds = [
 	'aura mastery 1'
 ];
+
+7/26
+Current issue:
+I'm storing activeHealers as just strings of the healer names.
+this causes an issue where updating activeHealers causes some ordering issues because its removing the first instance of that healer isntead of the actual instance we have.
+
+This should be solved in the next step, when we need to map each healers cds. We need to mark each healer with a unique id, so we can tell which cds belong to that healer.
+
+next step: brainstorm redux structure for tracking healers cds
