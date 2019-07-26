@@ -1,12 +1,14 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { ActiveHealerDropdowns } from './components/active-healer-dropdowns';
 
 import Select from 'react-select';
 import { createStore } from 'redux';
 import { temporalBoonReducers } from './redux/reducers/temporal-boon-reducers';
 import { Provider } from 'react-redux';
 import { BossDropdown } from './components/boss-dropdown';
+import { BossTable } from './components/boss-table';
 
 const items = [
   {value: 'Abyssal Commander Sivara', label: 'Abyssal Commander Sivara'},
@@ -25,9 +27,16 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
+        <Select
+          options={[{value: 'The Eternal Palace', label: 'The Eternal Palace'}]}
+          value={{value: 'The Eternal Palace', label: 'The Eternal Palace'}}
+          isDisabled
+        />
         <BossDropdown
           options={items}
         />
+        <BossTable />
+        <ActiveHealerDropdowns />
       </Provider>
     )
   }
