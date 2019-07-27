@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { ActiveHealerDropdowns } from './components/active-healer-dropdowns';
 

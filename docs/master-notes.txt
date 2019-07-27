@@ -173,3 +173,21 @@ this causes an issue where updating activeHealers causes some ordering issues be
 This should be solved in the next step, when we need to map each healers cds. We need to mark each healer with a unique id, so we can tell which cds belong to that healer.
 
 next step: brainstorm redux structure for tracking healers cds
+
+healers = {
+	1: {
+		id: 1,
+		type: 'Resto Shaman',
+		cds: [
+			'water',
+			'more water',
+			'gamer girl bath water'
+		]
+	}
+}
+
+cds = [
+	{
+
+	}
+]
