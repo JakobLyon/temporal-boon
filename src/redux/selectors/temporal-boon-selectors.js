@@ -18,6 +18,16 @@ export const getHealers = state => state.healers;
 export const getActiveHealers = state => state.activeHealers;
 export const getActiveHealersAlphabetical = createSelector([getActiveHealers], activeHealers => _.sortBy(activeHealers, ['type']));
 
+const getActiveHealersByBoss = state => state.activeHealersByBoss;
+export const getActiveHealersForSelectedBoss = createSelector([selectedBoss, getActiveHealersByBoss, getActiveHealers],
+  (boss, healersByBoss, healers) => {
+    return healersByBoss[boss] 
+      ? _.sortBy(healersByBoss[boss].map(healerId => healers[healerId]), ['type'])
+      : [];
+  }
+);
+
+
 // param healers, used cds
 // return cds
 // [{value: 'water', label: 'water'}, {...}, ...]

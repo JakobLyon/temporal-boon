@@ -180,17 +180,15 @@ healers = {
 		type: 'Resto Shaman',
 		cds: [
 			'water',
-			'more water',
-			'gamer girl bath water'
+			'totem'
 		]
 	}
 }
 
-cds = [
-	{
+selector for available cds (used as options for cd dropdown)
+const getAvailableCDs = (state) => {
 
-	}
-]
+}
 
 ENDGOALs: 
 1. options for cd dropdown
@@ -218,3 +216,10 @@ cds: [bath water, spirit totem]
 
 how do we tie each cd to its respective healer
 gotta be an id of some sort
+
+
+FIRST STEP, fix active healer shape
+DONE
+
+next: retool healers again
+must be per boss

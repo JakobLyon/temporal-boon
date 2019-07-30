@@ -101,12 +101,27 @@ const activeHealersReducer = (state = {}, action) => {
       const {activeHealer, id} = action.payload;
       return {...state, [id]: {type: activeHealer, id}};
     case CHANGE_ACTIVE_HEALER:
-      const {healerIDToRemove, healerTypeToAdd, healerIDToAdd} = action.payload;
-      return updateActiveHealers(state, healerIDToRemove, healerTypeToAdd, healerIDToAdd)
+      const {healerIdToRemove, healerTypeToAdd, healerIdToAdd} = action.payload;
+      return updateActiveHealers(state, healerIdToRemove, healerTypeToAdd, healerIdToAdd)
     default:
       return state;
   }
 };
+
+const activeHealersByBossReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADD_ACTIVE_HEALER: 
+    const {selectedBoss, healerIdToRemove, healerIdToAdd, id} = action.payload;
+      return state[selectedBoss]
+        ? {...state, [selectedBoss]: [...state[selectedBoss], id]}
+        : {...state, [selectedBoss]: [id]};
+    case CHANGE_ACTIVE_HEALER:
+      const stateWithHealerRemoved = state[selectedBoss].filter(healerId => healerId !== healerIdToRemove);
+      return {...state, [selectedBoss]: [...stateWithHealerRemoved, healerIdToAdd]};
+    default:
+      return state;
+  }
+}
 
 export const temporalBoonReducers = combineReducers({
  selectedRaid: selectedRaidReducer,
@@ -114,5 +129,6 @@ export const temporalBoonReducers = combineReducers({
  bosses: bossesReducer,
  spells: spellsReducer,
  healers: () => healers,
- activeHealers: activeHealersReducer
+ activeHealers: activeHealersReducer,
+ activeHealersByBoss: activeHealersByBossReducer
 });
