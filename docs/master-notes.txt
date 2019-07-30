@@ -223,3 +223,9 @@ DONE
 
 next: retool healers again
 must be per boss
+
+NEXT UP:
+healerCDGrid
+
+boss spell dropdown
+
