@@ -27,7 +27,6 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <Select
-          options={[{value: 'The Eternal Palace', label: 'The Eternal Palace'}]}
           value={{value: 'The Eternal Palace', label: 'The Eternal Palace'}}
           isDisabled
         />

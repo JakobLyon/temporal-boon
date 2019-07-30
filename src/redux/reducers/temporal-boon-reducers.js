@@ -66,13 +66,11 @@ const spells = {
 
 const healers = ['Holy Paladin', 'Resto Shaman', 'Disc Priest'];
 
-const updateActiveHealers = (state, healerToRemove, healerToAdd) => {
-  const newState = [...state, healerToAdd];
-  // This causes the first element be removed, since I'm using the healers as basic strings this causes some weird reordering
-  const index = newState.indexOf(healerToRemove);
-  if (index > -1) {
-    newState.splice(index, 1);
-  }
+// {type: 'resto shaman', id: 1}
+
+const updateActiveHealers = (state, healerIDToRemove, healerTypeToAdd, healerIDToAdd) => {
+  const newState = {...state, [healerIDToAdd]: {id: healerIDToAdd, type: healerTypeToAdd}};
+  delete newState[healerIDToRemove];
   return newState;
 }
 
@@ -97,12 +95,14 @@ const spellsReducer = (state = spells, action) => {
   return state;
 }
 
-const activeHealersReducer = (state = [], action) => {
+const activeHealersReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_ACTIVE_HEALER:
-      return [...state, action.activeHealer];
+      const {activeHealer, id} = action.payload;
+      return {...state, [id]: {type: activeHealer, id}};
     case CHANGE_ACTIVE_HEALER:
-      return updateActiveHealers(state, action.healerToRemove, action.healerToAdd)
+      const {healerIDToRemove, healerTypeToAdd, healerIDToAdd} = action.payload;
+      return updateActiveHealers(state, healerIDToRemove, healerTypeToAdd, healerIDToAdd)
     default:
       return state;
   }

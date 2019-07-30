@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import _ from 'lodash';
 
 export const selectedRaid = state => state.selectedRaid;
 export const selectedBoss = state => state.selectedBoss;
@@ -13,4 +14,17 @@ export const getSpellsByBoss = createSelector([selectedBoss, getBosses, getSpell
 });
 
 export const getHealers = state => state.healers;
+
 export const getActiveHealers = state => state.activeHealers;
+export const getActiveHealersAlphabetical = createSelector([getActiveHealers], activeHealers => _.sortBy(activeHealers, ['type']));
+
+// param healers, used cds
+// return cds
+// [{value: 'water', label: 'water'}, {...}, ...]
+
+// healers.cds
+export const getAvailableCDs = createSelector([getActiveHealers],
+  (activeHealers) => {
+
+  }
+  );

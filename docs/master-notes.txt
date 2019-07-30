@@ -191,3 +191,30 @@ cds = [
 
 	}
 ]
+
+ENDGOALs: 
+1. options for cd dropdown
+
+what shows up in this cd dropdown?
+
+for example:
+we have selected 3 healer types
+1. hpal
+2. water shaman
+3. holy priest
+
+collect their cds: those are your options
+other features?
+1. used cds do not reappear
+2. removing a healer resets any dropdowns using their cds
+
+PROBLEM
+I need a unique identifier for each healer, but I need to reconcile this id between
+how it will be represented in DB
+
+SITUATION:
+SELECTED [Resto shaman, resto shaman, resto shaman]
+cds: [bath water, spirit totem]
+
+how do we tie each cd to its respective healer
+gotta be an id of some sort

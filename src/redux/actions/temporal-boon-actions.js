@@ -7,13 +7,19 @@ export const setBoss = boss => ({
   boss
 });
 
-export const addActiveHealer = activeHealer => ({
+export const addActiveHealer = (activeHealer, id) => ({
   type: ADD_ACTIVE_HEALER,
-  activeHealer
-})
+  payload: {
+    activeHealer,
+    id
+  }
+});
 
-export const changeActiveHealer = (healerToRemove, healerToAdd) => ({
+export const changeActiveHealer = (healerIDToRemove, healerTypeToAdd, healerIDToAdd) => ({
   type: CHANGE_ACTIVE_HEALER,
-  healerToRemove,
-  healerToAdd
+  payload: {
+    healerIDToRemove,
+    healerTypeToAdd,
+    healerIDToAdd
+  }
 }); 
