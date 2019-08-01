@@ -4,7 +4,8 @@ import {
   ADD_ACTIVE_HEALER,
   CHANGE_ACTIVE_HEALER,
   ADD_TIMELINE_ROW,
-  UPDATE_TIMELINE_BOSS_SPELL
+  UPDATE_TIMELINE_BOSS_SPELL,
+  UPDATE_TIMING
 } from '../actions/temporal-boon-actions';
 
 const currentRaid = 'The Eternal Palace';
@@ -195,7 +196,7 @@ const timelineDataIdsByBossReducer = (state = {}, action) => {
 const timelineDataReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_TIMELINE_ROW:
-      const {bossSpellName, timing, id} = action.payload;
+      const {bossSpellName, id, timing} = action.payload;
       return {
         ...state,
         [id]: {
@@ -210,6 +211,14 @@ const timelineDataReducer = (state = {}, action) => {
         [action.payload.id]: {
           ...state[action.payload.id],
           bossSpellName: action.payload.bossSpellName
+        }
+      }
+    case UPDATE_TIMING:
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...state[action.payload.id],
+          timing: action.payload.timing
         }
       }
     default:

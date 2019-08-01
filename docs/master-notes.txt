@@ -268,3 +268,5 @@ two options
 	second time is based on first time
 2: cumulative time (30, 60) DO THIS ONE
 	second time is based on 0
+
+TODO: fix annoying bug with inputing timings, they get reordered but we don't auto focus on the one you were actually changing.'

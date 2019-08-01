@@ -5,6 +5,7 @@ export const CHANGE_ACTIVE_HEALER = 'CHANGE_ACTIVE_HEALER';
 // Timeline action types
 export const ADD_TIMELINE_ROW = 'ADD_TIMELINE_ROW';
 export const UPDATE_TIMELINE_BOSS_SPELL = 'UPDATE_TIMELINE_BOSS_SPELL';
+export const UPDATE_TIMING = 'UPDATE_TIMING';
 
 export const setBoss = boss => ({
   type: SET_BOSS,
@@ -31,12 +32,13 @@ export const changeActiveHealer = (healerIdToRemove, healerTypeToAdd, healerIdTo
 });
 
 // Timeline action creators
-export const addTimelineRow = (bossName, bossSpellName, id) => ({
+export const addTimelineRow = (bossName, bossSpellName, id, timing) => ({
   type: ADD_TIMELINE_ROW,
   payload: {
     bossName,
     bossSpellName,
-    id
+    id,
+    timing
   }
 });
 
@@ -47,3 +49,11 @@ export const updateTimelineBossSpell = (bossSpellName, id) => ({
     id
   }
 });
+
+export const updateTiming = (timing, id) => ({
+  type: UPDATE_TIMING,
+  payload: {
+    timing,
+    id
+  }
+})

@@ -33,10 +33,18 @@ export const getTimelineDataByBoss = createSelector(
   [selectedBoss, getTimelineData, getTimelineDataIdsByBoss],
   (selectedBoss, timelineData, timelineDataIdsByBoss) => {
     if (timelineDataIdsByBoss[selectedBoss]) {
-      return timelineDataIdsByBoss[selectedBoss].map(timelineDataId => timelineData[timelineDataId])
+      return _.sortBy(timelineDataIdsByBoss[selectedBoss].map(timelineDataId => timelineData[timelineDataId]), ['timing'])
     }
     return [];
   }
+);
+
+export const getLastTimingForCurrentBoss = createSelector(
+  [getTimelineDataByBoss],
+  timelineData =>{
+    return timelineData.length !== 0
+      ? timelineData[timelineData.length - 1].timing
+      : -30}
 )
 
 
