@@ -5,7 +5,7 @@ import { HealerCDDropdown } from './healer-cd-dropdown';
 import { BossSpellNotes } from './boss-spell-notes';
 import { TimingInput } from './timing-input';
 
-export const TimelineRow = ({id, bossSpellName, timing}) => (
+export const TimelineRow = ({id, bossSpellName, timing, notes}) => (
     <React.Fragment>
         <p>{id ? '' : 'new'} healer cd row</p>
         <BossSpellDropdown
@@ -14,14 +14,18 @@ export const TimelineRow = ({id, bossSpellName, timing}) => (
         />
         <TimingInput
             value={timing}
-            disabled={!bossSpellName}
+            disabled={!id}
             id={id}
         />
         <HealerCDDropdown />
         <HealerCDDropdown />
         <HealerCDDropdown />
         <HealerCDDropdown />
-        <BossSpellNotes />
+        <BossSpellNotes
+            id={id}
+            disabled={!id}
+            value={notes}
+        />
     </React.Fragment>
 )
 
