@@ -229,3 +229,42 @@ healerCDGrid
 
 boss spell dropdown
 
+TODAYS FOCUS: 8/1
+boss spell dropdown
+
+write some docs
+
+
+PROBLEM
+the rows are sequential and we need some way to track these timings
+
+only store the timing for each boss spell
+since we have the boss spells in an array, we have an order and can determine the timing
+
+bossSpellsWithCds = [
+	{
+		id: 1,
+		notes: '',
+		timing: 30 // start time in seconds,
+		cds: [
+			{
+				healerId: 1,
+				cd: 'totem'
+			},
+			{
+				healerId: 2,
+				cd: 'water'
+			}
+		]
+	},
+	{
+		id: 2,
+		timing: 60
+	}
+];
+
+two options
+1: chained time (30, 30)
+	second time is based on first time
+2: cumulative time (30, 60) DO THIS ONE
+	second time is based on 0

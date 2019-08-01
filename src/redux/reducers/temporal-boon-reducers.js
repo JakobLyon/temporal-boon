@@ -2,7 +2,9 @@ import { combineReducers } from 'redux';
 import {
   SET_BOSS,
   ADD_ACTIVE_HEALER,
-  CHANGE_ACTIVE_HEALER
+  CHANGE_ACTIVE_HEALER,
+  ADD_TIMELINE_ROW,
+  UPDATE_TIMELINE_BOSS_SPELL
 } from '../actions/temporal-boon-actions';
 
 const currentRaid = 'The Eternal Palace';
@@ -95,6 +97,14 @@ const spellsReducer = (state = spells, action) => {
   return state;
 }
 
+/*
+  [id]: {
+    type,
+    id
+  },
+  [id2]: {...},
+  ...
+*/
 const activeHealersReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_ACTIVE_HEALER:
@@ -108,16 +118,100 @@ const activeHealersReducer = (state = {}, action) => {
   }
 };
 
+/*
+  Healer ids for each boss
+
+  {
+    'Boss Name': [
+      1, 2, 3, ...
+    ],
+    'Boss Name 2': [
+      4, 5, 6, ...
+    ],
+    ...
+  }
+*/
 const activeHealersByBossReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_ACTIVE_HEALER: 
-    const {selectedBoss, healerIdToRemove, healerIdToAdd, id} = action.payload;
+      const {selectedBoss, healerIdToRemove, healerIdToAdd, id} = action.payload;
       return state[selectedBoss]
         ? {...state, [selectedBoss]: [...state[selectedBoss], id]}
         : {...state, [selectedBoss]: [id]};
     case CHANGE_ACTIVE_HEALER:
       const stateWithHealerRemoved = state[selectedBoss].filter(healerId => healerId !== healerIdToRemove);
       return {...state, [selectedBoss]: [...stateWithHealerRemoved, healerIdToAdd]};
+    default:
+      return state;
+  }
+}
+
+const timelineDataIdsByBossAddTimelineRow = (state, payload) => {
+  const {bossName, id} = payload;
+  if (state[bossName]) {
+    return {
+      ...state,
+      [bossName]: [
+        ...state[bossName],
+        id
+      ]
+    };
+  }
+  return {
+    ...state,
+    [bossName]: [
+      id
+    ]
+  };
+}
+
+/*
+  {
+    'Lady Ashvane': [
+      1, 2, 3
+    ],
+    'Tectus': [
+      4, 5, 6
+    ]
+  }
+*/
+const timelineDataIdsByBossReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADD_TIMELINE_ROW:
+      return timelineDataIdsByBossAddTimelineRow(state, action.payload);
+    default:
+      return state;
+  }
+};
+
+/* 
+  {
+    [id]: {
+      bossSpellName: 'Toxic Mark',
+      timing: 30
+    }
+  }
+*/
+const timelineDataReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADD_TIMELINE_ROW:
+      const {bossSpellName, timing, id} = action.payload;
+      return {
+        ...state,
+        [id]: {
+          bossSpellName,
+          id,
+          timing
+        }
+      };
+    case UPDATE_TIMELINE_BOSS_SPELL:
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...state[action.payload.id],
+          bossSpellName: action.payload.bossSpellName
+        }
+      }
     default:
       return state;
   }
@@ -130,5 +224,7 @@ export const temporalBoonReducers = combineReducers({
  spells: spellsReducer,
  healers: () => healers,
  activeHealers: activeHealersReducer,
- activeHealersByBoss: activeHealersByBossReducer
+ activeHealersByBoss: activeHealersByBossReducer,
+ timelineDataIdsByBoss: timelineDataIdsByBossReducer,
+ timelineData: timelineDataReducer
 });

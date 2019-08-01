@@ -27,6 +27,18 @@ export const getActiveHealersForSelectedBoss = createSelector([selectedBoss, get
   }
 );
 
+const getTimelineData = state => state.timelineData;
+const getTimelineDataIdsByBoss = state => state.timelineDataIdsByBoss;
+export const getTimelineDataByBoss = createSelector(
+  [selectedBoss, getTimelineData, getTimelineDataIdsByBoss],
+  (selectedBoss, timelineData, timelineDataIdsByBoss) => {
+    if (timelineDataIdsByBoss[selectedBoss]) {
+      return timelineDataIdsByBoss[selectedBoss].map(timelineDataId => timelineData[timelineDataId])
+    }
+    return [];
+  }
+)
+
 
 // param healers, used cds
 // return cds

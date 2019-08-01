@@ -8,7 +8,7 @@ import { temporalBoonReducers } from './redux/reducers/temporal-boon-reducers';
 import { Provider } from 'react-redux';
 import { BossDropdown } from './components/boss-dropdown';
 import { BossTable } from './components/boss-table';
-import { HealerCDGrid } from './components/healer-cd-grid/healer-cd-grid';
+import { TimelineGrid } from './components/timeline/timeline-grid';
 
 const items = [
   { value: 'Abyssal Commander Sivara', label: 'Abyssal Commander Sivara' },
@@ -36,7 +36,7 @@ class App extends React.Component {
         />
         <BossTable />
         <ActiveHealerDropdowns />
-        <HealerCDGrid />
+        <TimelineGrid />
       </Provider>
     )
   }
