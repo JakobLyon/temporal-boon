@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import _ from 'lodash';
 
 export const selectedRaid = state => state.selectedRaid;
 export const selectedBoss = state => state.selectedBoss;
@@ -13,4 +14,47 @@ export const getSpellsByBoss = createSelector([selectedBoss, getBosses, getSpell
 });
 
 export const getHealers = state => state.healers;
+
 export const getActiveHealers = state => state.activeHealers;
+export const getActiveHealersAlphabetical = createSelector([getActiveHealers], activeHealers => _.sortBy(activeHealers, ['type']));
+
+const getActiveHealersByBoss = state => state.activeHealersByBoss;
+export const getActiveHealersForSelectedBoss = createSelector([selectedBoss, getActiveHealersByBoss, getActiveHealers],
+  (boss, healersByBoss, healers) => {
+    return healersByBoss[boss] 
+      ? _.sortBy(healersByBoss[boss].map(healerId => healers[healerId]), ['type'])
+      : [];
+  }
+);
+
+const getTimelineData = state => state.timelineData;
+const getTimelineDataIdsByBoss = state => state.timelineDataIdsByBoss;
+export const getTimelineDataByBoss = createSelector(
+  [selectedBoss, getTimelineData, getTimelineDataIdsByBoss],
+  (selectedBoss, timelineData, timelineDataIdsByBoss) => {
+    if (timelineDataIdsByBoss[selectedBoss]) {
+      return _.sortBy(timelineDataIdsByBoss[selectedBoss].map(timelineDataId => timelineData[timelineDataId]), ['timing'])
+    }
+    return [];
+  }
+);
+
+export const getLastTimingForCurrentBoss = createSelector(
+  [getTimelineDataByBoss],
+  timelineData =>{
+    return timelineData.length !== 0
+      ? timelineData[timelineData.length - 1].timing
+      : -30}
+)
+
+
+// param healers, used cds
+// return cds
+// [{value: 'water', label: 'water'}, {...}, ...]
+
+// healers.cds
+export const getAvailableCDs = createSelector([getActiveHealers],
+  (activeHealers) => {
+
+  }
+  );

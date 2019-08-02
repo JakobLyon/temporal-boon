@@ -164,3 +164,109 @@ availableCds = [
 mappedCds = [
 	'aura mastery 1'
 ];
+
+7/26
+Current issue:
+I'm storing activeHealers as just strings of the healer names.
+this causes an issue where updating activeHealers causes some ordering issues because its removing the first instance of that healer isntead of the actual instance we have.
+
+This should be solved in the next step, when we need to map each healers cds. We need to mark each healer with a unique id, so we can tell which cds belong to that healer.
+
+next step: brainstorm redux structure for tracking healers cds
+
+healers = {
+	1: {
+		id: 1,
+		type: 'Resto Shaman',
+		cds: [
+			'water',
+			'totem'
+		]
+	}
+}
+
+selector for available cds (used as options for cd dropdown)
+const getAvailableCDs = (state) => {
+
+}
+
+ENDGOALs: 
+1. options for cd dropdown
+
+what shows up in this cd dropdown?
+
+for example:
+we have selected 3 healer types
+1. hpal
+2. water shaman
+3. holy priest
+
+collect their cds: those are your options
+other features?
+1. used cds do not reappear
+2. removing a healer resets any dropdowns using their cds
+
+PROBLEM
+I need a unique identifier for each healer, but I need to reconcile this id between
+how it will be represented in DB
+
+SITUATION:
+SELECTED [Resto shaman, resto shaman, resto shaman]
+cds: [bath water, spirit totem]
+
+how do we tie each cd to its respective healer
+gotta be an id of some sort
+
+
+FIRST STEP, fix active healer shape
+DONE
+
+next: retool healers again
+must be per boss
+
+NEXT UP:
+healerCDGrid
+
+boss spell dropdown
+
+TODAYS FOCUS: 8/1
+boss spell dropdown
+
+write some docs
+
+
+PROBLEM
+the rows are sequential and we need some way to track these timings
+
+only store the timing for each boss spell
+since we have the boss spells in an array, we have an order and can determine the timing
+
+bossSpellsWithCds = [
+	{
+		id: 1,
+		notes: '',
+		timing: 30 // start time in seconds,
+		cds: [
+			{
+				healerId: 1,
+				cd: 'totem'
+			},
+			{
+				healerId: 2,
+				cd: 'water'
+			}
+		]
+	},
+	{
+		id: 2,
+		timing: 60
+	}
+];
+
+two options
+1: chained time (30, 30)
+	second time is based on first time
+2: cumulative time (30, 60) DO THIS ONE
+	second time is based on 0
+
+TODO: fix annoying bug with inputing timings, they get reordered but we don't auto focus on the one you were actually changing.'
