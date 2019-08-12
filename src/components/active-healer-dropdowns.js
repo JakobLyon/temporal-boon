@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
 export const ActiveHealerDropdowns = connect(mapStateToProps, mapDispatchToProps)(({activeHealers, selectedBoss, changeActiveHealer, addActiveHealer}) => {
   return (
     <React.Fragment>
-      {activeHealers.map((healer, index) => <HealerDropdown key={index} value={healer.type} onChange={healerToAdd => changeActiveHealer(healer.id, healerToAdd, selectedBoss)}/>)}
+      {activeHealers.map((healer, index) => <HealerDropdown key={index} value={healer.name} onChange={healerToAdd => changeActiveHealer(healer.id, healerToAdd, selectedBoss)}/>)}
       <HealerDropdown onChange={healerToAdd => addActiveHealer(healerToAdd, selectedBoss)}/>
     </React.Fragment>
   )

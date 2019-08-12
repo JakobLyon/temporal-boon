@@ -7,6 +7,7 @@ export const ADD_TIMELINE_ROW = 'ADD_TIMELINE_ROW';
 export const UPDATE_TIMELINE_BOSS_SPELL = 'UPDATE_TIMELINE_BOSS_SPELL';
 export const UPDATE_TIMING = 'UPDATE_TIMING';
 export const UPDATE_NOTES = 'UPDATE_NOTES';
+export const ADD_HEALER_SPELL = 'ADD_HEALER_SPELL';
 
 export const setBoss = boss => ({
   type: SET_BOSS,
@@ -64,5 +65,16 @@ export const updateNotes = (notes, id) => ({
   payload: {
     notes,
     id
+  }
+})
+
+export const addHealerSpell = (rowId, healerId, castSpellId, spellId, timing) => ({
+  type: ADD_HEALER_SPELL,
+  payload: {
+    rowId,
+    healerId,
+    castSpellId,
+    spellId,
+    timing
   }
 })

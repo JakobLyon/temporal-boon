@@ -17,10 +17,7 @@ export const TimelineRow = ({id, bossSpellName, timing, notes}) => (
             disabled={!id}
             id={id}
         />
-        <HealerCDDropdown />
-        <HealerCDDropdown />
-        <HealerCDDropdown />
-        <HealerCDDropdown />
+        <HealerCDDropdown id={id} timing={timing}/>
         <BossSpellNotes
             id={id}
             disabled={!id}
