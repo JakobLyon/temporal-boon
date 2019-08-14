@@ -390,3 +390,21 @@ options = [
 ]
 
 HOW TO GET LATEST CAST
+
+TODO: write polyfills for
+1. array.prototype.first
+2. array.prototype.lodashSort
+3. array.prototype.last
+
+todays goals (8/14):
+[   ] finish mapping healer cooldowns
+[   ] style something
+[   ] write a polyfill
+[   ] write selectors to get cast spells in a form fit for 
+      AA note generation
+[   ] write issue for nick
+  - take selectors
+  - generate AA note in a component, render in p tag
+
+[   ] prettier
+[   ] document selector relationships/dependencies

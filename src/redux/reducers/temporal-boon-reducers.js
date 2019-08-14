@@ -280,12 +280,11 @@ const timelineDataReducer = (state = {}, action) => {
         }
       }
     case ADD_HEALER_SPELL:
-      debugger;
       const timelineDataRow = state[action.payload.rowId];
       const timelineDataCastSpells = timelineDataRow.castSpells;
       return {
         ...state,
-        [action.payload.id]: {
+        [action.payload.rowId]: {
           ...timelineDataRow,
           castSpells: [...timelineDataCastSpells, action.payload.castSpellId]
         }
@@ -295,13 +294,25 @@ const timelineDataReducer = (state = {}, action) => {
   }
 }
 
+/*
+{
+  [castSpellId]: {
+    castSpellId: 3
+    healerId: 1,
+    spellId: 1,
+    timing: 30
+  },
+  ...
+
+}
+*/
 const castHealerSpellsReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_HEALER_SPELL:
-      debugger;
       return {
         ...state,
         [action.payload.castSpellId]: {
+          castSpellId: action.payload.castSpellId,
           healerId: action.payload.healerId,
           spellId: action.payload.spellId,
           timing: action.payload.timing

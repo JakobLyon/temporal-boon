@@ -11,8 +11,15 @@ const mapStateToProps = state => ({
 export const TimelineGrid = connect(mapStateToProps)(({timelineData}) => (
   <React.Fragment>
     <p>healer cd grid</p>
-
-    {timelineData.map(data => (<TimelineRow id={data.id} bossSpellName={data.bossSpellName} timing={data.timing} notes={data.notes}/>))}
+    {timelineData.map(data =>
+      <TimelineRow
+        id={data.id}
+        bossSpellName={data.bossSpellName}
+        timing={data.timing}
+        notes={data.notes}
+        castSpells={data.castSpells}
+      />
+    )}
     <TimelineRow/>
   </React.Fragment>
 ));

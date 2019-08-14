@@ -14,7 +14,7 @@ const mapDispatchToProps = dispatch => ({
   changeActiveHealer: (healerIDToRemove, healerTypeToAdd, selectedBoss) =>
     dispatch(changeActiveHealer(healerIDToRemove, healerTypeToAdd, _.uniqueId(), selectedBoss)),
   addActiveHealer: (healerName, selectedBoss) =>
-    dispatch(addActiveHealer(healerName, _.uniqueId(), selectedBoss))
+    dispatch(addActiveHealer(healerName, Number(_.uniqueId()), selectedBoss))
 });
 
 export const ActiveHealerDropdowns = connect(mapStateToProps, mapDispatchToProps)(({activeHealers, selectedBoss, changeActiveHealer, addActiveHealer}) => {
