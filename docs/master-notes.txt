@@ -408,3 +408,17 @@ todays goals (8/14):
 
 [   ] prettier
 [   ] document selector relationships/dependencies
+[   ] explore nested reducers for sharing cast spells to active healers, specifically useful in healer-spell-dropdown when figuring out the healer to cast the new spell
+
+determine the first healer to have a spell available
+
+given: spell id, timing
+
+find last time each healer cast that spell, pick the latest
+
+add activeHealers selector to component?
+do it as a part of dispatching the action?
+
+activeHealers.filter(activeHealer => {
+
+})

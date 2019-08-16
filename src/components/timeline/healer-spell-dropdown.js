@@ -1,6 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux'; 
-import { makeGetOptionsForActiveHealerSpells } from '../../redux/selectors/temporal-boon-selectors';
+import { makeGetOptionsForActiveHealerSpells,
+  getActiveHealers,
+  getCastHealerSpells
+} from '../../redux/selectors/temporal-boon-selectors';
 import _ from 'lodash';
 
 import { addHealerSpell } from '../../redux/actions/temporal-boon-actions';
@@ -10,23 +14,51 @@ const makeMapStateToProps = () => {
     const getOptionsForHealerSpells = makeGetOptionsForActiveHealerSpells();
     return (state, props) => {
         return {
-            healingSpellOptions: getOptionsForHealerSpells(state, props).map(healerSpell => ({value: healerSpell.name, label: healerSpell.name, id: healerSpell.id}))
+            healingSpellOptions: getOptionsForHealerSpells(state, props), 
+            activeHealers: getActiveHealers(state),
+            castSpells: getCastHealerSpells(state)
         }
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    addHealerSpell: (timing, rowId, spellId) =>
-      dispatch(addHealerSpell(rowId, 1, Number(_.uniqueId()), spellId, timing))
+    addHealerSpell: (timing, rowId, spellId, healerId) => {
+      dispatch(addHealerSpell(rowId, healerId, Number(_.uniqueId()), spellId, timing))
+    }
 });
 
-
-// TODO: FIND OUT WHICH HEALER HAS THE FIRST AVAILABILITY TO CAST AN OFF CD SPELL
 export const HealerSpellDropdown = connect(makeMapStateToProps, mapDispatchToProps)(
-    ({rowId, timing, addHealerSpell, healingSpellOptions, value}) => (
+    ({rowId,
+      timing,
+      addHealerSpell,
+      healingSpellOptions,
+      value,
+      activeHealers,
+      castSpells
+    }) => {
+      return (
         <Select
-            onChange={selection => {addHealerSpell(timing, rowId, selection.id)}}
+            onChange={selection => {addHealerSpell(timing, rowId, selection.spellId, selection.healerId)}}
             options={healingSpellOptions}
-            value={value ? value : {value: 'Select...', label: 'Select...'}}
-        />
-));
+            value={value}
+        />)
+      }
+);
+
+HealerSpellDropdown.propTypes = {
+  rowId: PropTypes.number.isRequired,
+  timing: PropTypes.number.isRequired,
+  addHealerSpell: PropTypes.func,
+  healingSpellOptions: PropTypes.array,
+  value: PropTypes.object,
+  activeHealers: PropTypes.array,
+  castSpells: PropTypes.object
+};
+
+HealerSpellDropdown.defaultProps = {
+  addHealerSpell(){},
+  healingSpellOptions: [],
+  value: {value: 'Select...', label: 'Select...'},
+  activeHealers: [],
+  castSpells: {}
+};

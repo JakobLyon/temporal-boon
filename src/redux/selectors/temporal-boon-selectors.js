@@ -108,7 +108,7 @@ Record of when healers cast their spells
 }
 */
 
-const getCastHealerSpells = state => state.castHealerSpells;
+export const getCastHealerSpells = state => state.castHealerSpells;
 const getCastHealerSpellsByRowId = (state, props) => {
   return Object.values(state.castHealerSpells)
     .filter(castHealerSpell =>
@@ -140,86 +140,122 @@ const getLatestCastTiming = (spell, castSpells, healerId) => {
 export const makeGetOptionsForActiveHealerSpells = () => {
   return createSelector(
   [
-    getHealerSpellsForActiveHealers,
     getActiveHealersForSelectedBoss,
-    getCastHealerSpells,
     getHealerTypes,
-    getTimingByRowId
+    getCastHealerSpells,
+    getTimingByRowId,
+    getHealerSpells
   ],
-  (healerSpells, activeHealers, castHealerSpells, healerTypes, timing) => {
-    const availableSpells =
-      // for each active healer
-      Object.values(activeHealers).map(activeHealer => {
-        // get the spells they've cast
-        const thisHealerHasCast = Object.values(castHealerSpells).filter(castHealerSpell =>
-          castHealerSpell.healerId === activeHealer.id
-        );
-        // 
-        return activeHealer.spells.filter(spell => {
-          const timingsForSpellCast = thisHealerHasCast.filter(castSpell =>
-            castSpell.spellId === spell.id
+  (activeHealers, healerTypes, castHealerSpells, timing, healerSpells) => {
+    // TODO - make separate selector to memoize for performance
+    const lastHealerCasts = activeHealers.reduce(
+      (cur, activeHealer) => {
+        const lastHealerCast =
+          _.sortBy(
+            Object.values(castHealerSpells)
+              .filter(castHealerSpell => castHealerSpell.healerId === activeHealer.id),
+            ['timing']
+          )
+          .reverse()
+          .find(castHealerSpell => castHealerSpell.timing <= timing);
+
+        const lastHealerTiming =
+            lastHealerCast !== undefined
+            ? lastHealerCast.timing
+            : 0;
+
+        return [
+          ...cur,
+          {healerId: activeHealer.id, lastCastTiming: lastHealerTiming}
+        ]
+      },
+      []
+    )
+
+    let availableSpellIds = [];
+
+    // STEP 0 - remove spells on cooldown
+    // TODO explore if we can remove flatten in favor of a reduce
+    const cooldownsForAllHealers =
+      _.flatten(
+        // for each active healer
+        Object.values(activeHealers).map(activeHealer => {
+          // get the spells they've cast
+          const thisHealerHasCast = Object.values(castHealerSpells).filter(castHealerSpell =>
+            castHealerSpell.healerId === activeHealer.id
           );
-          // healer hasn't cast this spell, meaning it is available
-          if (timingsForSpellCast.length === 0) {
-            return true;
+          // 
+          const availableSpells = activeHealer.spells.filter(spell => {
+            const timingsForSpellCast = thisHealerHasCast.filter(castSpell =>
+              castSpell.spellId === spell.id
+            );
+            // healer hasn't cast this spell, meaning it is available
+            if (timingsForSpellCast.length === 0) {
+              return true;
+            }
+
+            const previousCast = _.sortBy(timingsForSpellCast
+              .filter(spellCast => spellCast.timing <= timing), ['timing']).pop();
+            const previousCastTiming = previousCast !== undefined ? previousCast.timing : null;
+
+            const futureCast = _.sortBy(timingsForSpellCast
+              .filter(spellCast => spellCast.timing > timing), ['timing']).shift();
+            const futureCastTiming = futureCast !== undefined ? futureCast.timing : null;
+
+            const spellOffCooldown =
+              previousCastTiming || previousCastTiming === 0
+                ? timing - spell.cooldown >= previousCastTiming
+                : true;
+            const spellWillBeOffCooldown =
+              futureCastTiming
+                ? timing + spell.cooldown <= futureCastTiming
+                : true;
+
+            return spellOffCooldown && spellWillBeOffCooldown;
+          });
+
+          availableSpellIds = [...availableSpellIds, ...availableSpells.map(spell => spell.id)];
+          return availableSpells.map(availableSpell => ({...availableSpell, healerId: activeHealer.id}));
+      }));
+
+    // get unique spell ids
+    availableSpellIds = [...new Set(availableSpellIds)];
+
+    //STEP 2 - organize by spell id
+    const cooldownsBySpellId = 
+      availableSpellIds.reduce(
+        (acc, spellId) => {
+          return {
+            ...acc,
+            [spellId]: [...cooldownsForAllHealers.filter(cooldown => cooldown.id === spellId)]
           }
+        },
+        {}
+      );
 
-          const previousCast = _.sortBy(timingsForSpellCast
-            .filter(spellCast => spellCast.timing <= timing), ['timing']).pop();
-          const previousCastTiming = previousCast ? previousCast.timing : null;
+    // STEP 3 - reduce cooldownsBySpellId to get one cooldown per spell id
+    const optionsForActiveHealerSpells =
+        Object.values(cooldownsBySpellId).reduce(
+          (cur, cooldowns) => {
+            const firstAvailableHealer =
+              _.sortBy(
+                lastHealerCasts
+                  .filter(lastHealerCast =>
+                    cooldowns.find(cooldown => cooldown.healerId === lastHealerCast.healerId)),
+                ['timing']
+              ).shift();
 
-          const futureCast = _.sortBy(timingsForSpellCast
-            .filter(spellCast => spellCast.timing > timing), ['timing']).shift();
-          const futureCastTiming = futureCast === undefined ? futureCast.timing : null;
+            const cooldown = cooldowns.find(cooldown => cooldown.healerId === firstAvailableHealer.healerId);
 
-          const spellOffCooldown = previousCastTiming ? timing - spell.cooldown >= previousCastTiming : true;
-          const spellWillBeOffCooldown = futureCastTiming ? timing + spell.cooldown <= futureCastTiming : true;
-
-          return spellOffCooldown && spellWillBeOffCooldown;
-        })
-      })
-
-    return _.flatten(availableSpells);
+            return [
+              ...cur,
+              cooldown
+            ]
+          },
+          []
+        )
 
 
-    // filter down all healerSpells to only those that are currently available
-    const options = Object.values(healerSpells).filter(spell => {
-      // if we haven't cast this spell yet, it is available
-      if (!Object.values(castHealerSpells).find(castHealerSpell =>
-        castHealerSpell.spellId === spell.id)) {
-        return true;
-      // otherwise, check all spells
-      } else {
-        // if spell is available, return true
-        // need to check each healer somehow
-        return timing - spell.cooldown >= getLatestCastTiming(spell, castHealerSpells)
-      }
-        // need to return boolean, not a list
-      //   const availableSpells = activeHealers.map(healer => {
-      //     const spells = healerTypes[healer.name].spells.map(spell => {
-      //       return {...healerSpells[spell]}}
-      //     );
-      //     return getSpellsOffCooldown(spells, timing, castHealerSpells, healer.healerId)
-      //   })
-    
-      //   return _.uniq(_.flatten(availableSpells));
-      // }
-    })
-
-    return options.map(option => ({value: option.name, label: option.name}));
-  }
-)};
-
-// currently castHealerSpells looks like
-// {
-//   [castSpellId]: {
-//     castSpellId: 3
-//     healerId: 1,
-//     spellId: 1,
-//     timing: 30
-//   },
-//   ...
-
-// }
-
-// we need a selector to map this to the actual spell?
+    return optionsForActiveHealerSpells.map(option => ({value: option.name, label: option.name, spellId: option.id, healerId: option.healerId}));
+  })
+};
