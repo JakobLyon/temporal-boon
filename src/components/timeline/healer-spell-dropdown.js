@@ -32,9 +32,7 @@ export const HealerSpellDropdown = connect(makeMapStateToProps, mapDispatchToPro
       timing,
       addHealerSpell,
       healingSpellOptions,
-      value,
-      activeHealers,
-      castSpells
+      value
     }) => {
       return (
         <Select
@@ -50,15 +48,11 @@ HealerSpellDropdown.propTypes = {
   timing: PropTypes.number.isRequired,
   addHealerSpell: PropTypes.func,
   healingSpellOptions: PropTypes.array,
-  value: PropTypes.object,
-  activeHealers: PropTypes.array,
-  castSpells: PropTypes.object
+  value: PropTypes.object
 };
 
 HealerSpellDropdown.defaultProps = {
   addHealerSpell(){},
   healingSpellOptions: [],
-  value: {value: 'Select...', label: 'Select...'},
-  activeHealers: [],
-  castSpells: {}
+  value: {value: 'Select...', label: 'Select...'}
 };

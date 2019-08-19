@@ -23,13 +23,14 @@ export const addActiveHealer = (activeHealer, id, selectedBoss) => ({
   }
 });
 
-export const changeActiveHealer = (healerIdToRemove, healerTypeToAdd, healerIdToAdd, selectedBoss) => ({
+export const changeActiveHealer = (healerIdToRemove, healerTypeToAdd, healerIdToAdd, selectedBoss, castSpellsForHealer) => ({
   type: CHANGE_ACTIVE_HEALER,
   payload: {
     healerIdToRemove,
     healerTypeToAdd,
     healerIdToAdd,
-    selectedBoss
+    selectedBoss,
+    castSpellsForHealer
   }
 });
 
