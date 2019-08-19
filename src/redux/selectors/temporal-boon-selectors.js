@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import _ from 'lodash';
+import { create } from 'domain';
 
 export const selectedRaid = state => state.selectedRaid;
 export const selectedBoss = state => state.selectedBoss;
@@ -129,15 +130,6 @@ export const makeGetCastHealerSpellsByRowId = () => {
   )
 }
 
-const getSpellsOffCooldown = (spells, timing, castSpells) => {
-	return spells.filter(spell => timing - spell.cooldown >= getLatestCastTiming(spell, castSpells))
-}
-
-const getLatestCastTiming = (spell, castSpells, healerId) => {
-	const latestSpell = _.sortBy(castSpells.filter(castSpell => castSpell.healerId === healerId && castSpell.spellId === spell.spellId), ['timing'])
-	return latestSpell.length === 0 ? 0 : latestSpell.timing
-}
-
 export const makeGetOptionsForActiveHealerSpells = () => {
   return createSelector(
   [
@@ -260,3 +252,13 @@ export const makeGetOptionsForActiveHealerSpells = () => {
     return optionsForActiveHealerSpells.map(option => ({value: option.name, label: option.name, spellId: option.id, healerId: option.healerId}));
   })
 };
+
+export const getCompleteTimelineData = createSelector(
+  [getTimelineData, getCastHealerSpells],
+  (timelineData, castHealerSpells) => {
+    return Object.values(timelineData).map(timelineDatum => ({
+      ...timelineDatum,
+      castSpells: timelineDatum.castSpells.map(castSpellId => castHealerSpells[castSpellId])
+    }))
+  }
+);
