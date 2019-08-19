@@ -115,11 +115,12 @@ const getCastHealerSpellsByRowId = (state, props) => {
       props.castSpells.includes(castHealerSpell.castSpellId) 
     );
 }
+
 export const makeGetCastHealerSpellsByRowId = () => {
   return createSelector(
     [getCastHealerSpellsByRowId, getHealerSpells],
     (castHealerSpells, healerSpells) => 
-    // i hate this, we could change healerSpells to be id keyed instead of string keyed so that its simply healerSpells[castHeaperSpell.spellId]
+    // i hate this, we could change healerSpells to be id keyed instead of string keyed so that its simply healerSpells[castHeaerSpell.spellId]
     castHealerSpells.map(castHealerSpell =>
       Object.values(healerSpells).find(healerSpell =>
         healerSpell.id === castHealerSpell.spellId

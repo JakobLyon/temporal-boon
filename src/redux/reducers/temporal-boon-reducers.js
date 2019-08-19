@@ -114,7 +114,7 @@ const healerTypes = {
 };
 
 const updateActiveHealers = (state, healerIDToRemove, healerTypeToAdd, healerIDToAdd) => {
-  const newState = {...state, [healerIDToAdd]: {id: healerIDToAdd, type: healerTypeToAdd}};
+  const newState = {...state, [healerIDToAdd]: {id: healerIDToAdd, name: healerTypeToAdd}};
   delete newState[healerIDToRemove];
   return newState;
 }
@@ -180,13 +180,14 @@ const activeHealersReducer = (state = {}, action) => {
 const activeHealersByBossReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_ACTIVE_HEALER: 
-      const {selectedBoss, healerIdToRemove, healerIdToAdd, id} = action.payload;
+      const {selectedBoss, id} = action.payload;
       return state[selectedBoss]
         ? {...state, [selectedBoss]: [...state[selectedBoss], id]}
         : {...state, [selectedBoss]: [id]};
     case CHANGE_ACTIVE_HEALER:
-      const stateWithHealerRemoved = state[selectedBoss].filter(healerId => healerId !== healerIdToRemove);
-      return {...state, [selectedBoss]: [...stateWithHealerRemoved, healerIdToAdd]};
+      const stateWithHealerRemoved =
+        state[action.payload.selectedBoss].filter(healerId => healerId !== action.payload.healerIdToRemove);
+      return {...state, [action.payload.selectedBoss]: [...stateWithHealerRemoved, action.payload.healerIdToAdd]};
     default:
       return state;
   }
@@ -289,6 +290,20 @@ const timelineDataReducer = (state = {}, action) => {
           castSpells: [...timelineDataCastSpells, action.payload.castSpellId]
         }
       };
+    case CHANGE_ACTIVE_HEALER:
+      return Object.values(state).reduce(
+        (cur, timelineRow) => {
+          return {
+            ...cur,
+            [timelineRow.id]: {
+              ...timelineRow,
+              castSpells: timelineRow.castSpells.filter(castSpell =>
+                !action.payload.castSpellsForHealer.includes(castSpell))
+            }
+          }
+        },
+        {}
+      )
     default:
       return state;
   }
@@ -318,6 +333,23 @@ const castHealerSpellsReducer = (state = {}, action) => {
           timing: action.payload.timing
         }
       }
+    case CHANGE_ACTIVE_HEALER:
+      const newState = Object.values(state).reduce(
+        (acc, cur) => {
+          if (!action.payload.castSpellsForHealer.includes(cur.castSpellId)) {
+            return {
+              ...acc,
+              [cur.id]: {
+                ...cur
+              }
+            }
+          }
+          return acc;
+        },
+        {}
+      );
+      
+      return newState;
     default:
       return state;
   }
