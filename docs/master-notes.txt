@@ -270,3 +270,155 @@ two options
 	second time is based on 0
 
 TODO: fix annoying bug with inputing timings, they get reordered but we don't auto focus on the one you were actually changing.'
+
+
+timelineData = {
+	2: {
+		bossSpellName: 'toxic brand',
+		id: 2,
+		timing: 30,
+		healerSpells: [1, 2, 3]
+	}
+}
+
+cdsAndTimings = {
+	1: {
+		healerId: 1,
+		spellId: 1
+	}
+}
+
+
+STEPS TO GET HEALER SPELL OPTIONS
+
+1. get active healers
+2. get spells for active healers
+3. get used spells for active healers
+4. for each spell, check if it is off cooldown
+
+/* 70 */
+const timing
+
+/* 
+{
+	healerType: [{spell}, ...],
+	...
+}
+
+{
+	1: [
+		{spellId: 1, cooldown: 60},
+		{spellId: 2, cooldown: 90},
+	],
+	2: [
+		{spellId: 3, cooldown: 120}
+	]
+ } */
+const healerSpellsByActiveHealers
+
+/*
+{
+	1: {healerId: 1, spellId: 1, timing: 30},
+	2: {healerId: 1, spellId: 2, timing: 60}
+}
+*/
+const castHealerSpells
+
+const activeHealers = [1, 1, 2]
+[
+	{
+		type: 1,
+		availableSpells: [1, 2]
+	},
+	{
+		type: 1,
+		availablespells: [2]
+	},
+	{
+		type: 2,
+		availableSpells: [3]
+	}
+]
+
+const options = healerSpells.filter(spell => {
+	if spell not in castHealerSpells:
+		return true (valid option)
+	else 
+		// second element here: what if we have a second healer who can cast it?
+		const availableSpells = activeHealers.map(healer => {
+			const spells = healerTypes[healer.name].spells.map(spell => ({healerSpells[spell]}))
+			
+			return getSpellsOffCooldown(spells, timing, castSpells, healerId)
+		})
+
+		return _.uniq(_.flatten(availableSpells));
+})
+
+getSpellsOffCooldown(spells, timing, castSpells) {
+	return spells.filter(spell => timing - spell.cooldown >= getLatestCastTiming(spell, castSpells))
+}
+
+getLatestCastTiming(spell, castSpells, healerId) {
+	const latestSpell = _.sortBy(castSpells.filter(castSpell => castSpell.healerId === healerId && castSpell.spellId = spell.spellId), ['timing'])
+	return latestSpell.length === 0 ? 0 : latestSpell.timing
+}
+
+output = [{value: 'Wings', healerId: 1, spellId: 1, timing}]
+
+options = [{
+	value: SPELL NAME,
+	label: SPELL NAME
+	spellId
+}, ...]
+
+
+MISSING A STEP
+check healer id in some way
+
+options = [{
+	value: SPELL NAME,
+	label: SPELL NAME
+	spellId
+}, ...]
+
+setHealerCD (healerId, spellId, timing)
+
+//
+
+options = [
+	...spellIds
+]
+
+HOW TO GET LATEST CAST
+
+TODO: write polyfills for
+1. array.prototype.first
+2. array.prototype.lodashSort
+3. array.prototype.last
+
+todays goals (8/14):
+[   ] finish mapping healer cooldowns
+[   ] style something
+[   ] write a polyfill
+[   ] write selectors to get cast spells in a form fit for 
+      AA note generation
+[   ] write issue for nick
+  - take selectors
+  - generate AA note in a component, render in p tag
+
+[   ] prettier
+[   ] document selector relationships/dependencies
+[   ] explore nested reducers for sharing cast spells to active healers, specifically useful in healer-spell-dropdown when figuring out the healer to cast the new spell
+
+determine the first healer to have a spell available
+
+given: spell id, timing
+
+find last time each healer cast that spell, pick the latest
+
+add activeHealers selector to component?
+do it as a part of dispatching the action?
+
+activeHealers.filter(activeHealer => {
+
+})
