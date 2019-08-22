@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { BossDropdown } from './components/boss-dropdown';
 import { BossTable } from './components/boss-table';
 import { TimelineGrid } from './components/timeline/timeline-grid';
+import { Banner } from './components/banner';
 
 const items = [
   { value: 'Abyssal Commander Sivara', label: 'Abyssal Commander Sivara' },
@@ -27,6 +28,7 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
+        <Banner/>
         <Select
           value={{ value: 'The Eternal Palace', label: 'The Eternal Palace' }}
           isDisabled
