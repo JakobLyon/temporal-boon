@@ -1,33 +1,45 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin-left: 30px;
+  margin-right: 30px;
+  background: #fff;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.header {
+  height: 50vh;
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 50% 100%, 0 75%);
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.8)), url("images/anduin-wyrnn-armor.jpg") no-repeat;
+  background-size: cover;
+  background-position: 50% 25%;
+  position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+.text {
+  font-family: 'Times New Roman', Times, serif;
+  color: #FFF;
+  font-size: 32px;
+  text-transform: uppercase;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  letter-spacing: 15px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.logo-container {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  height: 30px;
+  width: 30px;
+}
+
+.logo {
+  height: 30px;
+  width: 30px;
+  background: #fff;
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
 }
