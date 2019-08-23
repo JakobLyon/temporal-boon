@@ -4,14 +4,21 @@ import PropTypes from "prop-types";
 
 import DefaultBackground from "../images/anduin-wyrnn-armor.jpg";
 
+const getBackgroundValueForBanner = backgroundImage => {
+  return `linear-gradient(rgba(0, 0, 0, 0.8), rgb(255, 255, 255)), url(${backgroundImage}) no-repeat`;
+}
+
 const styles = {
   banner: {
     position: "relative",
     height: "50vh",
     clipPath: "polygon(0 0, 100% 0, 100% 75%, 50% 100%, 0 75%)",
-    background: `linear-gradient(rgba(0, 0, 0, 0.8), rgb(255, 255, 255)), url(${DefaultBackground}) no-repeat`,
+    background: getBackgroundValueForBanner(DefaultBackground),
     backgroundSize: "cover",
     backgroundPosition: "50% 25%"
+  },
+  "banner--dovetail-inverse": {
+    clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% 75%, 0 100%)"
   },
   textContainer: {
     position: "absolute",
@@ -67,6 +74,9 @@ const styles = {
   },
   "icon--diamond": {
     clipPath: "polygon(50% 0, 100% 50%, 50% 100%, 0 50%)"
+  },
+  iconImage: {
+    height: 30
   }
 };
 
@@ -76,22 +86,28 @@ const BannerComponent = ({
   tertiaryText,
   backgroundImage,
   iconImage,
-  iconShape
+  iconShape,
+  backgroundShape
 }) => {
   const icon = iconImage ? (
-    <img src={iconImage} alt="banner icon" />
+    <img src={iconImage} alt="banner icon" style={[styles.iconImage]} />
   ) : (
-    <span style={[styles.icon, styles[`icon--${iconShape}`]]} />
-  );
+      <span style={[styles.icon, styles[`icon--${iconShape}`]]} />
+    );
 
-  const bannerModifier = backgroundImage
+  const bannerBackgroundModifier = backgroundImage
     ? {
-        background: `linear-gradient(rgba(0, 0, 0, 0.8), rgb(255, 255, 255)), url(${backgroundImage}) no-repeat`
-      }
+      background: getBackgroundValueForBanner(backgroundImage),
+    }
     : {};
 
+  const bannerShapeModifier =
+    backgroundShape === "dovetail"
+      ? {}
+      : { ...styles["banner--dovetail-inverse"] }
+
   return (
-    <div style={[styles.banner, bannerModifier]}>
+    <div style={[styles.banner, bannerBackgroundModifier, bannerShapeModifier]}>
       <h1 style={[styles.primaryText]}>{primaryText}</h1>
       <div style={[styles.textContainer]}>
         <span style={[styles.tertiaryText]}>{tertiaryText}</span>
@@ -108,7 +124,8 @@ BannerComponent.propTypes = {
   tertiaryText: PropTypes.string,
   backgroundImage: PropTypes.string,
   iconImage: PropTypes.string,
-  iconShape: PropTypes.oneOf(["diamond", "star", "cross"])
+  iconShape: PropTypes.oneOf(["diamond", "star", "cross"]),
+  backgroundShape: PropTypes.oneOf(["dovetail", "inverse dovetail"])
 };
 
 BannerComponent.defaultProps = {
@@ -117,7 +134,8 @@ BannerComponent.defaultProps = {
   tertiaryText: "Tertiary Text",
   iconImage: null,
   iconShape: "star",
-  backgroundImage: null
+  backgroundImage: null,
+  backgroundShape: "dovetail"
 };
 
 export const Banner = Radium(BannerComponent);

@@ -11,6 +11,9 @@ import { BossTable } from './components/boss-table';
 import { TimelineGrid } from './components/timeline/timeline-grid';
 import { Banner } from './components/banner';
 
+import AnduinSylvanas from './images/anduin-sylvanas.jpg';
+import PriestIcon from './images/priest-icon.jpg';
+
 const items = [
   { value: 'Abyssal Commander Sivara', label: 'Abyssal Commander Sivara' },
   { value: 'Blackwater Behemoth', label: 'Blackwater Behemoth' },
@@ -28,7 +31,21 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Banner/>
+        <Banner />
+        <Banner
+          primaryText={'dingus primary'}
+          secondaryText="abyssal commander sylas"
+          tertiaryText="the eternal palace"
+          iconShape="cross"
+          backgroundShape="dovetail-inverse"
+        />
+        <Banner
+          iconShape="diamond"
+          backgroundImage={AnduinSylvanas}
+        />
+        <Banner
+          iconImage={PriestIcon}
+        />
         <Select
           value={{ value: 'The Eternal Palace', label: 'The Eternal Palace' }}
           isDisabled
