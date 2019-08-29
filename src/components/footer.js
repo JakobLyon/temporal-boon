@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Radium from "radium";
+import { flexbox } from "@material-ui/system";
 
 const styles = {
   footer: {
@@ -16,7 +17,8 @@ const styles = {
     top: "50%",
     transform: "translate(-50%, -50%)",
     textAlign: "center",
-    width: "75%"
+    width: "75%",
+    display: "flex"
   },
   image: {
     width: "25%",
@@ -24,7 +26,9 @@ const styles = {
     display: "inline-block"
   },
   links: {
-    width: "75%"
+    width: "75%",
+    display: "flex",
+    flexDirection: "column"
   },
   link: {
     textTransform: "uppercase",
@@ -58,7 +62,9 @@ const FooterComponent = ({ image, links, backgroundImage }) => (
     ]}
   >
     <div style={[styles.contentWrapper]}>
-      <img style={[styles.image]} src={image} alt="footer logo"/>
+      <div className="image-container">
+        <img style={[styles.image]} src={image} alt="footer logo"/>
+      </div>
       <div style={[styles.links]}>
         {links.map((link, index) => (
           <a style={[styles.link]} href={link.url} key={index}>
