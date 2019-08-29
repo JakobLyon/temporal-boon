@@ -10,6 +10,9 @@ import { BossDropdown } from './components/boss-dropdown';
 import { BossTable } from './components/boss-table';
 import { TimelineGrid } from './components/timeline/timeline-grid';
 import { Banner } from './components/banner';
+import { Footer } from './components/footer';
+
+import PriestIcon from './images/priest-icon.jpg';
 
 const items = [
   { value: 'Abyssal Commander Sivara', label: 'Abyssal Commander Sivara' },
@@ -38,7 +41,11 @@ class App extends React.Component {
         />
         <BossTable />
         <ActiveHealerDropdowns />
-        <TimelineGrid />
+        <TimelineGrid /> 
+        <Footer
+          image={PriestIcon}
+          links={[{url: "www.wowhead.com", text: "Wowhead"}, {url: "www.icy-veins.com", text: "Icy Veins"}, {url: "www.google.com", text: "Google"}]}
+        />
       </Provider>
     )
   }
