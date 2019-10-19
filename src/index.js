@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import _ from 'lodash';
+
+// eslint-disable-next-line no-extend-native
+Array.prototype.sortBy = (sortValues) => _.sortBy(this, sortValues);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
