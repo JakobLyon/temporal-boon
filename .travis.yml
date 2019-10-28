@@ -1,6 +1,6 @@
-// we need super user level permissions
+# we need super user level permissions
 sudo: required
-// we need docker installed (travis knows how to do this with just the name)
+# we need docker installed (travis knows how to do this with just the name)
 services:
   - docker
 
