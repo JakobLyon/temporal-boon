@@ -1,0 +1,11 @@
+// we need super user level permissions
+sudo: required
+// we need docker installed (travis knows how to do this with just the name)
+services:
+  - docker
+
+before_install:
+  - docker build -t jakoblyon/temporal-boon -f Dockerfile.dev .
+
+script:
+  - docker run jakoblyon/temporal-boon npm run test -- --coverage
