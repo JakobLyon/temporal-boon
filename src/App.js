@@ -30,6 +30,7 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
+        <p>temp change</p>
         <Select
           value={{ value: "The Eternal Palace", label: "The Eternal Palace" }}
           isDisabled
