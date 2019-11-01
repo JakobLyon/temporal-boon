@@ -1,19 +1,41 @@
 version: '3'
-services: 
-  web:
+services:
+  postgres:
+    image: 'postgres:latest'
+  nginx:
+    restart: always
     build:
-      context: .
       dockerfile: Dockerfile.dev
+      context: ./nginx
     ports:
-      - "3001:3000"
+      - "3000:80"
+  api:
+    depends_on:
+      - postgres
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
     volumes:
       - /app/node_modules
-      - .:/app
+      - ./server:/app
+    environment:
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
   test:
     build:
-      context: .
       dockerfile: Dockerfile.dev
+      context: ./client
     volumes:
       - /app/node_modules
-      - .:/app
+      - ./client:/app
     command: ["npm", "run", "test"]
