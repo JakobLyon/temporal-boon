@@ -5,11 +5,23 @@ services:
   - docker
 
 before_install:
-  - docker build -t jakoblyon/temporal-boon -f Dockerfile.dev .
+  - docker build -t jakoblyon/temporal-boon-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true jakoblyon/temporal-boon npm run test -- --coverage
+  - docker run -e CI=true jakoblyon/temporal-boon-test npm run test -- --coverage
 
+after_success: 
+  # Setup production images
+  - docker build -t jakoblyon/temporal-boon-client ./client
+  - docker build -t jakoblyon/temporal-boon-server ./server
+  - docker build -t jakoblyon/temporal-boon-nginx ./nginx
+  # Login to Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push production images to Docker Hub
+  - docker push jakoblyon/temporal-boon-client
+  - docker push jakoblyon/temporal-boon-server
+  - docker push jakoblyon/temporal-boon-nginx
+  
 # travis ci is preconfigured to know what elasticbeanstalk means
 deploy:
   provider: elasticbeanstalk
