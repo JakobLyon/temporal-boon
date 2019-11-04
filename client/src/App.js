@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { BossDropdown } from "./components/boss-dropdown";
 import { BossTable } from "./components/boss-table";
 import { TimelineGrid } from "./components/timeline/timeline-grid";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const items = [
   { value: "Abyssal Commander Sivara", label: "Abyssal Commander Sivara" },
@@ -29,16 +30,18 @@ const store = createStore(
 class App extends React.Component {
   render() {
     return (
-      <Provider store={store}>
-        <Select
-          value={{ value: "The Eternal Palace", label: "The Eternal Palace" }}
-          isDisabled
-        />
-        <BossDropdown options={items} />
-        <BossTable />
-        <ActiveHealerDropdowns />
-        <TimelineGrid />
-      </Provider>
+      <Router>
+        <Provider store={store}>
+          <Select
+            value={{ value: "The Eternal Palace", label: "The Eternal Palace" }}
+            isDisabled
+          />
+          <BossDropdown options={items} />
+          <BossTable />
+          <ActiveHealerDropdowns />
+          <TimelineGrid />
+        </Provider>
+      </Router>
     );
   }
 }
