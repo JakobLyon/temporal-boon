@@ -27,12 +27,12 @@ deploy:
   provider: elasticbeanstalk
   region: "us-east-2"
   # app name in AWS
-  app: "temporal-boon"
-  env: "TemporalBoon-env"
+  app: temporal-boon
+  env: TemporalBoon-env
   # aws -> services -> s3 -> my bucket
-  bucket_name: "elasticbeanstalk-us-east-2-017242711305"
+  bucket_name: elasticbeanstalk-us-east-2-017242711305
   # by default same name as app name
-  bucket_path: "temporal-boon"
+  bucket_path: temporal-boon
   # any time code is pushed to branched master, trigger deploy
   on:
     branch: master
