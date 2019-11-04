@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { BossDropdown } from "./components/boss-dropdown";
 import { BossTable } from "./components/boss-table";
 import { TimelineGrid } from "./components/timeline/timeline-grid";
+import { Banner } from "./components/banner";
 import { BrowserRouter as Router } from "react-router-dom";
 
 const items = [
@@ -32,6 +33,7 @@ class App extends React.Component {
     return (
       <Router>
         <Provider store={store}>
+          <Banner />
           <Select
             value={{ value: "The Eternal Palace", label: "The Eternal Palace" }}
             isDisabled
