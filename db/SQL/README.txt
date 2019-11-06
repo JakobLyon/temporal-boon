@@ -1,0 +1,1 @@
+The SQL in this directory run at startup time for the postgres docker image when building dev. They run in alphabetical order, thus a.sql has been designated as any SQL necessary for setup.
