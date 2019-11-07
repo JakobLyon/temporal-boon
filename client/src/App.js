@@ -10,7 +10,7 @@ import { Footer } from "./components/footer";
 import PriestIcon from "./images/priest-icon.jpg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { TemporalBoon } from "./components/temporal-boon";
-import { HomeLogin } from "./components/home-login";
+import { HomeLogin } from "./components/pages/home-login";
 
 const store = createStore(
   temporalBoonReducers,
