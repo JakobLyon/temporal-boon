@@ -1,7 +1,11 @@
 version: '3'
 services:
   postgres:
-    image: 'postgres:latest'
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./db
+    environment:
+      - POSTGRES_DB=temp_boon_pg
   nginx:
     restart: always
     build:
@@ -19,10 +23,10 @@ services:
       - /app/node_modules
       - ./server:/app
     environment:
-      - PGUSER=postgres
+      - PGUSER=temp_boon_pg
       - PGHOST=postgres
-      - PGDATABASE=postgres
-      - PGPASSWORD=postgres_password
+      - PGDATABASE=temp_boon_pg
+      - PGPASSWORD=postgres
       - PGPORT=5432
   client:
     build:

@@ -4,11 +4,18 @@
     "pg": "7.4.3",
     "redis": "2.8.0",
     "cors": "2.8.4",
-    "nodemon": "1.18.3",
+    "nodemon": "*",
     "body-parser": "*"
   },
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon -L",
     "start": "node index.js"
-  }
+  },
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
