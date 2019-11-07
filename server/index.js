@@ -28,53 +28,54 @@ pgClient
 // Express route handlers
 //////////////////////////
 
-app.get("/create_user", async (req, res) => {
-  const existingUsername = await pgClient.query(
-    `SELECT username FROM users WHERE username = '${req.body.username}'`
-  );
-
-  // Username already exists, early exit
-  if (existingUsername.length !== 0) {
+app.post("/create_user", async (req, res) => {
+  const { username, password } = req.body;
+  const selectResult = await pgClient.query(
+    `SELECT username FROM users WHERE username = '${username}'`
+  ).catch(err => {
+    res.send({status: false, message: err.message})
+  });
+  
+  // If username exists, exit
+  if (selectResult.rowCount !== 0) {
     res.send({ status: false, message: "Username already exists" });
     return;
   }
 
-  const values = await pgClient.query(
-    `INSERT INTO users (username, password) values(${req.body.username}, ${req.body.password})`
-  );
-  if (values === false) {
-    res.send({ status: false, message: "Something unexpected happened" });
+  // Insert
+  const insertResult = await pgClient.query(
+    `INSERT INTO users (username, password) values('${username}', '${password}')`
+  ).catch(err => {
+    res.send({status: false, message: err.message});
     return;
-  }
+  });
+
   res.send({ status: true });
 });
 
 app.post("/login", async (req, res) => {
-  const loggedIn = pgClient
+  pgClient
     .query(
-      `SELECT 1 FROM users WHERE username = '${req.body.username}' AND password = '${req.body.password}'`
+      // `SELECT 1 FROM users WHERE username = '${req.body.username}' AND password = '${req.body.password}';`
+      `SELECT 1 FROM users where username = '${req.body.username}' AND password = '${req.body.password}'`
     )
-    .then(p => {
-      console.log("p");
-      console.log(p);
+    .then(query => {
+      if (query.rowCount === 0) {
+        res.send({
+          status: false,
+          message: "Username does not exist, try creating a user"
+        });
+        return;
+      }
+      res.send({ status: true });
     })
     .catch(err => {
       res.send({
         status: false,
-        message: "Username does not exist, try creating a user"
+        message:
+          "Something went extraordinarily wrong. Please consult the Star Chart."
       });
     });
-  if (loggedIn.length === 0) {
-    res.send({
-      status: false,
-      message: "Username does not exist, try creating a user"
-    });
-    return;
-  }
-
-  // this doesn't fail properly LOLE
-
-  res.send({ status: true });
 });
 
 app.listen(5000, err => {
