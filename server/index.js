@@ -30,6 +30,15 @@ pgClient
 
 app.post("/create_user", async (req, res) => {
   const { username, password } = req.body;
+
+  if (!username || !password) {
+    res.send({
+      status: false,
+      message: "Username or password is missing"
+    });
+    return;
+  }
+
   const selectResult = await pgClient
     .query(`SELECT username FROM users WHERE username = '${username}'`)
     .catch(err => {
@@ -43,7 +52,7 @@ app.post("/create_user", async (req, res) => {
   }
 
   // Insert
-  const insertResult = await pgClient
+  await pgClient
     .query(
       `INSERT INTO users (username, password) values('${username}', '${password}')`
     )
@@ -56,6 +65,15 @@ app.post("/create_user", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    res.send({
+      status: false,
+      message: "Username or password is missing"
+    });
+    return;
+  }
+
   pgClient
     .query(
       // `SELECT 1 FROM users WHERE username = '${req.body.username}' AND password = '${req.body.password}';`
