@@ -7,7 +7,9 @@ import {
   UPDATE_TIMELINE_BOSS_SPELL,
   UPDATE_TIMING,
   UPDATE_NOTES,
-  ADD_HEALER_SPELL
+  ADD_HEALER_SPELL,
+  LOG_IN,
+  LOG_OUT
 } from '../actions/temporal-boon-actions';
 
 const currentRaid = 'The Eternal Palace';
@@ -355,6 +357,17 @@ const castHealerSpellsReducer = (state = {}, action) => {
   }
 }
 
+const isLoggedInReducer = (state = false, action) => {
+  switch (action.type) {
+    case LOG_IN:
+      return true;
+    case LOG_OUT:
+      return false;
+    default:
+      return state;
+  }
+}
+
 export const temporalBoonReducers = combineReducers({
  selectedRaid: selectedRaidReducer,
  selectedBoss: selectedBossReducer,
@@ -367,5 +380,6 @@ export const temporalBoonReducers = combineReducers({
  // TODO: make these nested in a subreducer, put in separate file
  timelineDataIdsByBoss: timelineDataIdsByBossReducer,
  timelineData: timelineDataReducer,
- castHealerSpells: castHealerSpellsReducer
+ castHealerSpells: castHealerSpellsReducer,
+ isLoggedIn: isLoggedInReducer
 });

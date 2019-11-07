@@ -1,13 +1,53 @@
 import React from "react";
-import Radium from "radium";
+import PropTypes from "prop-types";
 import axios from "axios";
+import Radium from "radium";
 
 const styles = {
-  login: {},
-  errorMessage: {}
+  login: {
+
+  },
+  errorMessage: {
+
+  },
+  username: {
+
+  },
+  username__label: {
+
+  },
+  username__input: {
+
+  },
+  password: {
+
+  },
+  password__label: {
+
+  },
+  password__input: {
+
+  },
+  buttons: {
+
+  },
+  buttons__login_button: {
+
+  },
+  buttons__create_button: {
+
+  }
 };
 
 class LoginComponent extends React.Component {
+  static propTypes = {
+    logIn: PropTypes.func
+  };
+
+  static defaultProps = {
+    logIn: () => {}
+  };
+
   state = {
     error: false,
     errorMessage: "",
@@ -30,18 +70,36 @@ class LoginComponent extends React.Component {
     // else, hit create
     if (this.state.submitType === "login") {
       await axios
-        .get("/api/login")
-        .then(response => {
-          debugger;
-          console.log(response);
+        .post("/api/login", {
+          username: this.state.username,
+          password: this.state.password
+        })
+        .then(({ data }) => {
+          const { status, message } = data;
+          if (status) {
+            // switch views
+            this.props.logIn();
+          } else {
+            // trigger error state
+            this.setState({ error: true, errorMessage: message });
+          }
         })
         .catch(error => console.log(error));
     } else {
       await axios
-        .post("/api/create_user")
-        .then(response => {
-          debugger;
-          console.log(response);
+        .post("/api/create_user", {
+          username: this.state.username,
+          password: this.state.password
+        })
+        .then(({ data }) => {
+          const { status, message } = data;
+          if (status) {
+            // switch views
+            this.props.logIn();
+          } else {
+            // trigger error state
+            this.setState({ error: true, errorMessage: message });
+          }
         })
         .catch(error => console.log(error));
     }
@@ -49,35 +107,50 @@ class LoginComponent extends React.Component {
 
   render() {
     return (
-      <form className="login" onSubmit={this.handleSubmit}>
+      <form
+        onSubmit={this.handleSubmit}
+        style={[styles.login]}
+      >
         {this.state.error && (
-          <div className="errorMessage">{this.state.errorMessage}</div>
+          <div style={[styles.errorMessage]}>{this.state.errorMessage}</div>
         )}
-        <div className="username">
-          <label for="username">Username: </label>
+        <div style={[styles.username]}>
+          <label htmlFor="username" style={[styles.username__label]}>
+            Username:{" "}
+          </label>
           <input
             type="text"
             name="username"
             id="username"
             value={this.state.username}
             onChange={event => this.setState({ username: event.target.value })}
+            style={[styles.username__input]}
           />
         </div>
-        <div className="password">
-          <label for="password">Password: </label>
+        <div style={[styles.password]}>
+          <label htmlFor="password" style={[styles.password__label]}>
+            Password:{" "}
+          </label>
           <input
             type="text"
             name="password"
             id="password"
             value={this.state.password}
             onChange={event => this.setState({ password: event.target.value })}
+            style={[styles.password__input]}
           />
         </div>
-        <div className="buttons">
-          <button onClick={this.loginUser} className="login-button">
+        <div style={[styles.buttons]}>
+          <button
+            onClick={this.loginUser}
+            style={[styles.buttons__login_button]}
+          >
             Login
           </button>
-          <button onClick={this.createUser} className="create-button">
+          <button
+            onClick={this.createUser}
+            style={[styles.buttons__create_button]}
+          >
             Create
           </button>
         </div>

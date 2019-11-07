@@ -1,13 +1,16 @@
-export const SET_BOSS = 'SET_BOSS';
-export const ADD_ACTIVE_HEALER = 'ADD_ACTIVE_HEALER';
-export const CHANGE_ACTIVE_HEALER = 'CHANGE_ACTIVE_HEALER';
+export const SET_BOSS = "SET_BOSS";
+export const ADD_ACTIVE_HEALER = "ADD_ACTIVE_HEALER";
+export const CHANGE_ACTIVE_HEALER = "CHANGE_ACTIVE_HEALER";
 
 // Timeline action types
-export const ADD_TIMELINE_ROW = 'ADD_TIMELINE_ROW';
-export const UPDATE_TIMELINE_BOSS_SPELL = 'UPDATE_TIMELINE_BOSS_SPELL';
-export const UPDATE_TIMING = 'UPDATE_TIMING';
-export const UPDATE_NOTES = 'UPDATE_NOTES';
-export const ADD_HEALER_SPELL = 'ADD_HEALER_SPELL';
+export const ADD_TIMELINE_ROW = "ADD_TIMELINE_ROW";
+export const UPDATE_TIMELINE_BOSS_SPELL = "UPDATE_TIMELINE_BOSS_SPELL";
+export const UPDATE_TIMING = "UPDATE_TIMING";
+export const UPDATE_NOTES = "UPDATE_NOTES";
+export const ADD_HEALER_SPELL = "ADD_HEALER_SPELL";
+
+export const LOG_IN = "LOG_IN";
+export const LOG_OUT = "LOG_OUT";
 
 export const setBoss = boss => ({
   type: SET_BOSS,
@@ -23,7 +26,13 @@ export const addActiveHealer = (activeHealer, id, selectedBoss) => ({
   }
 });
 
-export const changeActiveHealer = (healerIdToRemove, healerTypeToAdd, healerIdToAdd, selectedBoss, castSpellsForHealer) => ({
+export const changeActiveHealer = (
+  healerIdToRemove,
+  healerTypeToAdd,
+  healerIdToAdd,
+  selectedBoss,
+  castSpellsForHealer
+) => ({
   type: CHANGE_ACTIVE_HEALER,
   payload: {
     healerIdToRemove,
@@ -59,7 +68,7 @@ export const updateTiming = (timing, id) => ({
     timing,
     id
   }
-})
+});
 
 export const updateNotes = (notes, id) => ({
   type: UPDATE_NOTES,
@@ -67,9 +76,15 @@ export const updateNotes = (notes, id) => ({
     notes,
     id
   }
-})
+});
 
-export const addHealerSpell = (rowId, healerId, castSpellId, spellId, timing) => ({
+export const addHealerSpell = (
+  rowId,
+  healerId,
+  castSpellId,
+  spellId,
+  timing
+) => ({
   type: ADD_HEALER_SPELL,
   payload: {
     rowId,
@@ -78,4 +93,12 @@ export const addHealerSpell = (rowId, healerId, castSpellId, spellId, timing) =>
     spellId,
     timing
   }
+});
+
+export const logIn = () => ({
+  type: LOG_IN
+})
+
+export const logOut = () => ({
+  type: LOG_OUT
 })

@@ -8,9 +8,9 @@ import { Provider } from "react-redux";
 import { Banner } from "./components/banner";
 import { Footer } from "./components/footer";
 import PriestIcon from "./images/priest-icon.jpg";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { TemporalBoon } from "./components/temporal-boon";
-import { Login } from "./components/login";
+import { HomeLogin } from "./components/home-login";
 
 const store = createStore(
   temporalBoonReducers,
@@ -23,8 +23,10 @@ class App extends React.Component {
       <Router>
         <Provider store={store}>
           <Banner />
-          <Route exact path="/cooldowns" component={TemporalBoon} />
-          <Route path="/" component={Login} />
+          <Switch>
+            <Route exact path="/" component={HomeLogin} />
+            <Route path="/cooldowns" component={TemporalBoon} />
+          </Switch>
           <Footer
             image={PriestIcon}
             links={[

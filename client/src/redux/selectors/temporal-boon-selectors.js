@@ -1,6 +1,8 @@
 import { createSelector } from "reselect";
 import _ from "lodash";
 
+export const isLoggedIn = state => state.isLoggedIn;
+
 export const selectedRaid = state => state.selectedRaid;
 export const selectedBoss = state => state.selectedBoss;
 const getBosses = state => state.bosses;
