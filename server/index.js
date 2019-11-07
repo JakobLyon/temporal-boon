@@ -30,12 +30,12 @@ pgClient
 
 app.post("/create_user", async (req, res) => {
   const { username, password } = req.body;
-  const selectResult = await pgClient.query(
-    `SELECT username FROM users WHERE username = '${username}'`
-  ).catch(err => {
-    res.send({status: false, message: err.message})
-  });
-  
+  const selectResult = await pgClient
+    .query(`SELECT username FROM users WHERE username = '${username}'`)
+    .catch(err => {
+      res.send({ status: false, message: err.message });
+    });
+
   // If username exists, exit
   if (selectResult.rowCount !== 0) {
     res.send({ status: false, message: "Username already exists" });
@@ -43,12 +43,14 @@ app.post("/create_user", async (req, res) => {
   }
 
   // Insert
-  const insertResult = await pgClient.query(
-    `INSERT INTO users (username, password) values('${username}', '${password}')`
-  ).catch(err => {
-    res.send({status: false, message: err.message});
-    return;
-  });
+  const insertResult = await pgClient
+    .query(
+      `INSERT INTO users (username, password) values('${username}', '${password}')`
+    )
+    .catch(err => {
+      res.send({ status: false, message: err.message });
+      return;
+    });
 
   res.send({ status: true });
 });
