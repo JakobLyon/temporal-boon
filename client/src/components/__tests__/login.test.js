@@ -24,9 +24,7 @@ describe("<Login/>", () => {
   });
 
   it("Login fails, error message renders", async () => {
-    const logIn = () => {
-      return Promise.resolve({ status: false, message: "failed" })
-    };
+    const logIn = () => Promise.resolve({ status: false, message: "failed" });
     const wrapper = mount(<Login handleLogIn={logIn} />);
     // find and click login
     const loginButton = wrapper.find('[data-enzyme-id="login-button"]');
