@@ -6,7 +6,9 @@ import Radium from "radium";
 
 import { connect } from "react-redux";
 import { isLoggedIn } from "../../redux/selectors/temporal-boon-selectors";
-import { logIn } from "../../redux/actions/temporal-boon-actions";
+
+import { logIn } from "../../redux/actions/log-in";
+import { createUser } from "../../redux/actions/create-user";
 
 const styles = {
   outer: {
@@ -26,34 +28,32 @@ const mapStateToProps = state => ({
   isLoggedIn: isLoggedIn(state)
 });
 
-const mapDispatchToProps = dispatch => ({
-  logIn: () => dispatch(logIn())
-});
-
-const HomeLoginComponent = ({ isLoggedIn, logIn }) =>
+const HomeLoginComponent = ({ isLoggedIn, logIn, createUser }) =>
   isLoggedIn ? (
     <Redirect to="/cooldowns" />
   ) : (
     <div data-enzyme-id="home-login-component" style={[styles.outer]}>
       <div style={[styles.inner]}>
-        <Login logIn={logIn} />
+        <Login handleLogIn={logIn} handleCreateUser={createUser} />
       </div>
     </div>
   );
 
 HomeLoginComponent.propTypes = {
   isLoggedIn: PropTypes.bool,
-  logIn: PropTypes.func
+  logIn: PropTypes.func,
+  createUser: PropTypes.func
 };
 
 HomeLoginComponent.defaultProps = {
   isLoggedIn: false,
-  logIn: () => {}
+  logIn: () => {},
+  createUser: () => {}
 };
 
 export default HomeLoginComponent;
 
 export const HomeLogin = connect(
   mapStateToProps,
-  mapDispatchToProps
+  { logIn, createUser }
 )(Radium(HomeLoginComponent));
