@@ -11,7 +11,8 @@ const styles = {
     flexDirection: "column",
     justifyContent: "space-evenly",
     fontSize: "1.6rem",
-    background: "linear-gradient(to bottom right, rgba(0, 0, 0, 0.7), rgb(200, 200, 200))",
+    background:
+      "linear-gradient(to bottom right, rgba(0, 0, 0, 0.7), rgb(200, 200, 200))",
     padding: "0 3rem"
   },
   errorMessage: {},
@@ -82,6 +83,8 @@ class LoginComponent extends React.Component {
   };
 
   handleSubmit = async event => {
+
+    
     event.preventDefault();
     // if login, hit login end point
     // else, hit create
@@ -126,7 +129,9 @@ class LoginComponent extends React.Component {
     return (
       <form onSubmit={this.handleSubmit} style={[styles.login]}>
         {this.state.error && (
-          <div style={[styles.errorMessage]}>{this.state.errorMessage}</div>
+          <div data-enzyme-id="error-message" style={[styles.errorMessage]}>
+            {this.state.errorMessage}
+          </div>
         )}
         <div style={[styles.username]}>
           <label htmlFor="username" style={[styles.username__label]}>
@@ -158,7 +163,8 @@ class LoginComponent extends React.Component {
           <button
             onClick={this.loginUser}
             style={[styles.buttons__login_button, styles.button]}
-            key="login"
+            key="login-button"
+            data-enzyme-id="login-button"
           >
             Login
           </button>
@@ -166,6 +172,7 @@ class LoginComponent extends React.Component {
             onClick={this.createUser}
             style={[styles.buttons__create_button, styles.button]}
             key="create"
+            data-enzyme-id="create-button"
           >
             Create
           </button>
