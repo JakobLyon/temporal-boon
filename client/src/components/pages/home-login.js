@@ -34,7 +34,7 @@ const HomeLoginComponent = ({ isLoggedIn, logIn }) =>
   isLoggedIn ? (
     <Redirect to="/cooldowns" />
   ) : (
-    <div style={[styles.outer]}>
+    <div data-enzyme-id="home-login-component" style={[styles.outer]}>
       <div style={[styles.inner]}>
         <Login logIn={logIn} />
       </div>
@@ -50,6 +50,8 @@ HomeLoginComponent.defaultProps = {
   isLoggedIn: false,
   logIn: () => {}
 };
+
+export default HomeLoginComponent;
 
 export const HomeLogin = connect(
   mapStateToProps,
