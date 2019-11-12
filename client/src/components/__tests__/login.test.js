@@ -1,10 +1,7 @@
 import React from "react";
 import { Login } from "../login";
-import { configure, mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mount } from "enzyme";
 import axiosMock from "axios";
-
-configure({ adapter: new Adapter() });
 
 describe("<Login/>", () => {
   it("login fails and renders error message", async () => {

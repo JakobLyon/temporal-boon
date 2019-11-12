@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import {
   SET_BOSS,
   ADD_ACTIVE_HEALER,
@@ -71,7 +70,7 @@ const spells = {
   }
 }
 
-const healerSpells = {
+export const healerSpells = {
   'Wings': {
     name: 'Wings',
     cooldown: 90,
@@ -94,7 +93,7 @@ const healerSpells = {
   }
 };
 
-const healerTypes = {
+export const healerTypes = {
   'Holy Paladin': {
     name: 'Holy Paladin',
     id: 1,
@@ -121,11 +120,11 @@ const updateActiveHealers = (state, healerIDToRemove, healerTypeToAdd, healerIDT
   return newState;
 }
 
-const selectedRaidReducer = (state = currentRaid, action) => {
+export const selectedRaidReducer = (state = currentRaid, action) => {
   return state;
 }
 
-const selectedBossReducer = (state = currentBoss, action) => {
+export const selectedBossReducer = (state = currentBoss, action) => {
   switch (action.type) {
     case SET_BOSS:
       return action.boss;
@@ -134,11 +133,11 @@ const selectedBossReducer = (state = currentBoss, action) => {
   }
 }
 
-const bossesReducer = (state = bosses, action) => {
+export const bossesReducer = (state = bosses, action) => {
   return state;
 }
 
-const spellsReducer = (state = spells, action) => {
+export const spellsReducer = (state = spells, action) => {
   return state;
 }
 
@@ -153,7 +152,7 @@ const spellsReducer = (state = spells, action) => {
   [id2]: {...},
   ...
 */
-const activeHealersReducer = (state = {}, action) => {
+export const activeHealersReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_ACTIVE_HEALER:
       const {activeHealer, id} = action.payload;
@@ -179,7 +178,7 @@ const activeHealersReducer = (state = {}, action) => {
     ...
   }
 */
-const activeHealersByBossReducer = (state = {}, action) => {
+export const activeHealersByBossReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_ACTIVE_HEALER: 
       const {selectedBoss, id} = action.payload;
@@ -195,7 +194,7 @@ const activeHealersByBossReducer = (state = {}, action) => {
   }
 }
 
-const timelineDataIdsByBossAddTimelineRow = (state, payload) => {
+export const timelineDataIdsByBossAddTimelineRow = (state, payload) => {
   const {bossName, id} = payload;
   if (state[bossName]) {
     return {
@@ -224,7 +223,7 @@ const timelineDataIdsByBossAddTimelineRow = (state, payload) => {
     ]
   }
 */
-const timelineDataIdsByBossReducer = (state = {}, action) => {
+export const timelineDataIdsByBossReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_TIMELINE_ROW:
       return timelineDataIdsByBossAddTimelineRow(state, action.payload);
@@ -245,7 +244,7 @@ const timelineDataIdsByBossReducer = (state = {}, action) => {
     }
   }
 */
-const timelineDataReducer = (state = {}, action) => {
+export const timelineDataReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_TIMELINE_ROW:
       const {bossSpellName, id, timing} = action.payload;
@@ -323,7 +322,7 @@ const timelineDataReducer = (state = {}, action) => {
 
 }
 */
-const castHealerSpellsReducer = (state = {}, action) => {
+export const castHealerSpellsReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_HEALER_SPELL:
       return {
@@ -357,7 +356,7 @@ const castHealerSpellsReducer = (state = {}, action) => {
   }
 }
 
-const isLoggedInReducer = (state = false, action) => {
+export const isLoggedInReducer = (state = false, action) => {
   switch (action.type) {
     case LOG_IN:
       return true;
@@ -367,19 +366,3 @@ const isLoggedInReducer = (state = false, action) => {
       return state;
   }
 }
-
-export const temporalBoonReducers = combineReducers({
- selectedRaid: selectedRaidReducer,
- selectedBoss: selectedBossReducer,
- bosses: bossesReducer,
- spells: spellsReducer,
- healerTypes: () => healerTypes,
- healerSpells: () => healerSpells,
- activeHealers: activeHealersReducer,
- activeHealersByBoss: activeHealersByBossReducer,
- // TODO: make these nested in a subreducer, put in separate file
- timelineDataIdsByBoss: timelineDataIdsByBossReducer,
- timelineData: timelineDataReducer,
- castHealerSpells: castHealerSpellsReducer,
- isLoggedIn: isLoggedInReducer
-});
