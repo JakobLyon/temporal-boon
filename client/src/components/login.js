@@ -83,11 +83,11 @@ class LoginComponent extends React.Component {
     this.setState({ submitType: "create" });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = event => {
     event.preventDefault();
     if (this.state.submitType === "login") {
       this.props
-        .logIn({
+        .handleLogIn({
           username: this.state.username,
           password: this.state.password
         })
@@ -106,7 +106,6 @@ class LoginComponent extends React.Component {
         .then(data => {
           const { status, message } = data;
           if (!status) {
-            // trigger error state
             this.setState({ error: true, errorMessage: message });
           }
         });
