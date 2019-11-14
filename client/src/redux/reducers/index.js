@@ -1,19 +1,19 @@
 import { combineReducers } from "redux";
 import {
-  selectedRaidReducer,
   bossesReducer,
   spellsReducer,
   healerTypes,
   healerSpells,
   activeHealersByBossReducer,
-  activeHealersReducer,
   timelineDataIdsByBossReducer,
   timelineDataReducer,
   castHealerSpellsReducer,
   isLoggedInReducer
 } from "./temporal-boon-reducers";
 
-import selectedBossReducer from "./selected-boss";
+import selectedBossReducer from "./selected-boss/selected-boss";
+import { selectedRaidReducer } from "./selected-raid/selected-raid";
+import { activeHealersReducer } from "./active-healers/active-healers";
 
 export default combineReducers({
   selectedRaid: selectedRaidReducer,

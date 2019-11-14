@@ -1,5 +1,4 @@
 import {
-  SET_BOSS,
   ADD_ACTIVE_HEALER,
   CHANGE_ACTIVE_HEALER,
   ADD_TIMELINE_ROW,
@@ -10,9 +9,6 @@ import {
   LOG_IN,
   LOG_OUT
 } from '../actions/temporal-boon-actions';
-
-const currentRaid = 'The Eternal Palace';
-const currentBoss = 'Abyssal Commander Sivara';
 
 const bosses = {
   'Abyssal Commander Sivara': {
@@ -114,25 +110,6 @@ export const healerTypes = {
   }
 };
 
-const updateActiveHealers = (state, healerIDToRemove, healerTypeToAdd, healerIDToAdd) => {
-  const newState = {...state, [healerIDToAdd]: {id: healerIDToAdd, name: healerTypeToAdd}};
-  delete newState[healerIDToRemove];
-  return newState;
-}
-
-export const selectedRaidReducer = (state = currentRaid, action) => {
-  return state;
-}
-
-export const selectedBossReducer = (state = currentBoss, action) => {
-  switch (action.type) {
-    case SET_BOSS:
-      return action.boss;
-    default:
-      return state;
-  }
-}
-
 export const bossesReducer = (state = bosses, action) => {
   return state;
 }
@@ -140,30 +117,6 @@ export const bossesReducer = (state = bosses, action) => {
 export const spellsReducer = (state = spells, action) => {
   return state;
 }
-
-/*
-  Healer ID: information for that healer
-
-  [id]: {
-    type,
-    id,
-    spells: [1, 2, 3]
-  },
-  [id2]: {...},
-  ...
-*/
-export const activeHealersReducer = (state = {}, action) => {
-  switch (action.type) {
-    case ADD_ACTIVE_HEALER:
-      const {activeHealer, id} = action.payload;
-      return {...state, [id]: {name: activeHealer, id}};
-    case CHANGE_ACTIVE_HEALER:
-      const {healerIdToRemove, healerTypeToAdd, healerIdToAdd} = action.payload;
-      return updateActiveHealers(state, healerIdToRemove, healerTypeToAdd, healerIdToAdd)
-    default:
-      return state;
-  }
-};
 
 /*
   Healer ids for each boss
