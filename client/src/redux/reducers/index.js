@@ -4,7 +4,6 @@ import {
   spellsReducer,
   healerTypes,
   healerSpells,
-  activeHealersByBossReducer,
   timelineDataIdsByBossReducer,
   timelineDataReducer,
   castHealerSpellsReducer,
@@ -14,6 +13,7 @@ import {
 import selectedBossReducer from "./selected-boss/selected-boss";
 import { selectedRaidReducer } from "./selected-raid/selected-raid";
 import { activeHealersReducer } from "./active-healers/active-healers";
+import { activeHealersByBossReducer } from "./active-healers-by-boss/active-healers-by-boss";
 
 export default combineReducers({
   selectedRaid: selectedRaidReducer,

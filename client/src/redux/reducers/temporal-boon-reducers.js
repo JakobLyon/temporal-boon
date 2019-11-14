@@ -1,5 +1,4 @@
 import {
-  ADD_ACTIVE_HEALER,
   CHANGE_ACTIVE_HEALER,
   ADD_TIMELINE_ROW,
   UPDATE_TIMELINE_BOSS_SPELL,
@@ -116,35 +115,6 @@ export const bossesReducer = (state = bosses, action) => {
 
 export const spellsReducer = (state = spells, action) => {
   return state;
-}
-
-/*
-  Healer ids for each boss
-
-  {
-    'Boss Name': [
-      1, 2, 3, ...
-    ],
-    'Boss Name 2': [
-      4, 5, 6, ...
-    ],
-    ...
-  }
-*/
-export const activeHealersByBossReducer = (state = {}, action) => {
-  switch (action.type) {
-    case ADD_ACTIVE_HEALER: 
-      const {selectedBoss, id} = action.payload;
-      return state[selectedBoss]
-        ? {...state, [selectedBoss]: [...state[selectedBoss], id]}
-        : {...state, [selectedBoss]: [id]};
-    case CHANGE_ACTIVE_HEALER:
-      const stateWithHealerRemoved =
-        state[action.payload.selectedBoss].filter(healerId => healerId !== action.payload.healerIdToRemove);
-      return {...state, [action.payload.selectedBoss]: [...stateWithHealerRemoved, action.payload.healerIdToAdd]};
-    default:
-      return state;
-  }
 }
 
 export const timelineDataIdsByBossAddTimelineRow = (state, payload) => {
