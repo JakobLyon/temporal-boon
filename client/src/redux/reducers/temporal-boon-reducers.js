@@ -117,44 +117,6 @@ export const spellsReducer = (state = spells, action) => {
   return state;
 }
 
-export const timelineDataIdsByBossAddTimelineRow = (state, payload) => {
-  const {bossName, id} = payload;
-  if (state[bossName]) {
-    return {
-      ...state,
-      [bossName]: [
-        ...state[bossName],
-        id
-      ]
-    };
-  }
-  return {
-    ...state,
-    [bossName]: [
-      id
-    ]
-  };
-}
-
-/*
-  {
-    'Lady Ashvane': [
-      1, 2, 3
-    ],
-    'Tectus': [
-      4, 5, 6
-    ]
-  }
-*/
-export const timelineDataIdsByBossReducer = (state = {}, action) => {
-  switch (action.type) {
-    case ADD_TIMELINE_ROW:
-      return timelineDataIdsByBossAddTimelineRow(state, action.payload);
-    default:
-      return state;
-  }
-};
-
 /* 
   Holds data for a row in the Timeline
 
