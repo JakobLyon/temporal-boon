@@ -1,0 +1,24 @@
+{
+  "name": "temporal-boon",
+  "version": "1.0.0",
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "^3.0.9"
+  },
+  "scripts": {
+    "test": "cd client && set CI=true && npm test -- --coverage"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test"
+    }
+  },
+  "author": "Jakob Lyon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JakobLyon/temporal-boon/issues"
+  },
+  "homepage": "https://github.com/JakobLyon/temporal-boon#readme"
+}

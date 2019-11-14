@@ -1,89 +1,48 @@
 import React from "react";
 import { Login } from "../login";
-import { configure, mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
-import axiosMock from "axios";
-
-configure({ adapter: new Adapter() });
+import { mount } from "enzyme";
 
 describe("<Login/>", () => {
-  it("login fails and renders error message", async () => {
-    axiosMock.post.mockResolvedValueOnce({data:{ status: false, message: "test content" }});
-
-    const logInFunc = jest.fn();
-    const wrapper = mount(<Login logIn={logInFunc} />);
-
+  it("Login button calls provided function", async () => {
+    const logIn = () => Promise.resolve({ status: true });
+    const wrapper = mount(<Login handleLogIn={logIn} />);
     // find and click login
     const loginButton = wrapper.find('[data-enzyme-id="login-button"]');
     loginButton.simulate("click");
-    // fail
     await wrapper.find("form").simulate("submit");
-    expect(logInFunc).toHaveBeenCalledTimes(0);
-
-    expect(
-      wrapper.render().find('[data-enzyme-id="error-message"]').length
-    ).toBe(1);
-
-    expect(
-      wrapper.render().find('[data-enzyme-id="error-message"]').text()
-    ).toBe("test content");
+    expect(wrapper.find('[data-enzyme-id="error-message"]').length).toBe(0);
   });
 
-  it("create fails and renders error message", async () => {
-    axiosMock.post.mockResolvedValueOnce({data:{ status: false, message: "test content" }});
-
-    const logInFunc = jest.fn();
-    const wrapper = mount(<Login logIn={logInFunc} />);
-
-    // find and click login
-    const loginButton = wrapper.find('[data-enzyme-id="create-button"]');
-    loginButton.simulate("click");
-    // fail
+  it("Create button calls provided function", async () => {
+    const createUser = () => Promise.resolve({ status: true });
+    const wrapper = mount(<Login handleCreateUser={createUser} />);
+    // find and click create
+    const createButton = wrapper.find('[data-enzyme-id="create-button"]');
+    createButton.simulate("click");
     await wrapper.find("form").simulate("submit");
-    expect(logInFunc).toHaveBeenCalledTimes(0);
-
-    expect(
-      wrapper.render().find('[data-enzyme-id="error-message"]').length
-    ).toBe(1);
-
-    expect(
-      wrapper.render().find('[data-enzyme-id="error-message"]').text()
-    ).toBe("test content");
+    expect(wrapper.find('[data-enzyme-id="error-message"]').length).toBe(0);
   });
 
-  it("login succeeds", async () => {
-    axiosMock.post.mockResolvedValueOnce({data:{ status: true}});
-
-    const logInFunc = jest.fn();
-    const wrapper = mount(<Login logIn={logInFunc} />);
-
+  it("Login fails, error message renders", async () => {
+    const logIn = () => Promise.resolve({ status: false, message: "failed" });
+    const wrapper = mount(<Login handleLogIn={logIn} />);
     // find and click login
     const loginButton = wrapper.find('[data-enzyme-id="login-button"]');
     loginButton.simulate("click");
-    // succeed
     await wrapper.find("form").simulate("submit");
-    expect(logInFunc).toHaveBeenCalledTimes(1);
-
-    expect(
-      wrapper.render().find('[data-enzyme-id="error-message"]').length
-    ).toBe(0);
+    wrapper.update();
+    expect(wrapper.find('[data-enzyme-id="error-message"]').length).toBe(1);
   });
 
-  it("create succeeds", async () => {
-    axiosMock.post.mockResolvedValueOnce({data:{ status: true}});
-
-    const logInFunc = jest.fn();
-    const wrapper = mount(<Login logIn={logInFunc} />);
-
-    // find and click login
-    const loginButton = wrapper.find('[data-enzyme-id="create-button"]');
-    loginButton.simulate("click");
-    // succeed
+  it("Create fails, error message renders", async () => {
+    const createUser = () =>
+      Promise.resolve({ status: false, message: "failed" });
+    const wrapper = mount(<Login handleCreateUser={createUser} />);
+    // find and click create
+    const createButton = wrapper.find('[data-enzyme-id="create-button"]');
+    createButton.simulate("click");
     await wrapper.find("form").simulate("submit");
-    expect(logInFunc).toHaveBeenCalledTimes(1);
-
-    expect(
-      wrapper.render().find('[data-enzyme-id="error-message"]').length
-    ).toBe(0);
+    wrapper.update();
+    expect(wrapper.find('[data-enzyme-id="error-message"]').length).toBe(1);
   });
 });

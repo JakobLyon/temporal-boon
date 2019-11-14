@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import Radium from "radium";
 
 const styles = {
@@ -59,11 +58,13 @@ const styles = {
 
 class LoginComponent extends React.Component {
   static propTypes = {
-    logIn: PropTypes.func
+    handleLogIn: PropTypes.func,
+    handleCreateUser: PropTypes.func
   };
 
   static defaultProps = {
-    logIn: () => {}
+    handleLogIn: () => {},
+    handleCreateUser: PropTypes.func
   };
 
   state = {
@@ -82,46 +83,32 @@ class LoginComponent extends React.Component {
     this.setState({ submitType: "create" });
   };
 
-  handleSubmit = async event => {
-
-    
+  handleSubmit = event => {
     event.preventDefault();
-    // if login, hit login end point
-    // else, hit create
     if (this.state.submitType === "login") {
-      await axios
-        .post("/api/login", {
+      this.props
+        .handleLogIn({
           username: this.state.username,
           password: this.state.password
         })
-        .then(({ data }) => {
+        .then(data => {
           const { status, message } = data;
-          if (status) {
-            // switch views
-            this.props.logIn();
-          } else {
-            // trigger error state
+          if (!status) {
             this.setState({ error: true, errorMessage: message });
           }
-        })
-        .catch(error => console.log(error));
+        });
     } else {
-      await axios
-        .post("/api/create_user", {
+      this.props
+        .handleCreateUser({
           username: this.state.username,
           password: this.state.password
         })
-        .then(({ data }) => {
+        .then(data => {
           const { status, message } = data;
-          if (status) {
-            // switch views
-            this.props.logIn();
-          } else {
-            // trigger error state
+          if (!status) {
             this.setState({ error: true, errorMessage: message });
           }
-        })
-        .catch(error => console.log(error));
+        });
     }
   };
 
