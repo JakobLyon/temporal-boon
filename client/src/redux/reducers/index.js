@@ -11,9 +11,10 @@ import {
   isLoggedInReducer
 } from "./temporal-boon-reducers";
 
-import selectedBossReducer from "./selected-boss/selected-boss";
+import { selectedBossReducer } from "./selected-boss/selected-boss";
 import { selectedRaidReducer } from "./selected-raid/selected-raid";
 import { activeHealersReducer } from "./active-healers/active-healers";
+import { imagesForBossesReducer } from "./image-for-bosses/image-for-bosses";
 
 export default combineReducers({
   selectedRaid: selectedRaidReducer,
@@ -27,5 +28,6 @@ export default combineReducers({
   timelineDataIdsByBoss: timelineDataIdsByBossReducer,
   timelineData: timelineDataReducer,
   castHealerSpells: castHealerSpellsReducer,
-  isLoggedIn: isLoggedInReducer
+  isLoggedIn: isLoggedInReducer,
+  imagesForBosses: imagesForBossesReducer
 });

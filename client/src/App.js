@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";
-import { Banner } from "./components/banner";
 import { Footer } from "./components/footer";
 import PriestIcon from "./images/priest-icon.jpg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -14,7 +13,6 @@ class App extends React.Component {
     return (
       <Router>
         <Provider store={store}>
-          <Banner />
           <Switch>
             <Route exact path="/" component={HomeLogin} />
             <Route path="/cooldowns" component={TemporalBoon} />

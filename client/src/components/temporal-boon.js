@@ -4,6 +4,7 @@ import { BossTable } from "./boss-table";
 import { TimelineGrid } from "./timeline/timeline-grid";
 import { ActiveHealerDropdowns } from "./active-healer-dropdowns";
 import Select from "react-select";
+import { CooldownsBanner } from "./cooldowns-banner";
 
 const items = [
   { value: "Abyssal Commander Sivara", label: "Abyssal Commander Sivara" },
@@ -17,7 +18,8 @@ const items = [
 ];
 
 export const TemporalBoon = () => (
-  <div>
+  <React.Fragment>
+    <CooldownsBanner />
     <Select
       value={{ value: "The Eternal Palace", label: "The Eternal Palace" }}
       isDisabled
@@ -26,5 +28,5 @@ export const TemporalBoon = () => (
     <BossTable />
     <ActiveHealerDropdowns />
     <TimelineGrid />
-  </div>
+  </React.Fragment>
 );

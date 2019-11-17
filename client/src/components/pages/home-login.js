@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Login } from "../login";
 import { Redirect } from "react-router-dom";
 import "./home-login.scss";
+import { Banner } from "../../components/banner";
 
 import { connect } from "react-redux";
 import { isLoggedIn } from "../../redux/selectors/temporal-boon-selectors";
@@ -18,11 +19,14 @@ const HomeLoginComponent = ({ isLoggedIn, logIn, createUser }) =>
   isLoggedIn ? (
     <Redirect to="/cooldowns" />
   ) : (
-    <div data-enzyme-id="home-login-component" className="outer">
-      <div className="inner">
-        <Login handleLogIn={logIn} handleCreateUser={createUser} />
+    <React.Fragment>
+      <Banner />
+      <div data-enzyme-id="home-login-component" className="outer">
+        <div className="inner">
+          <Login handleLogIn={logIn} handleCreateUser={createUser} />
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 
 HomeLoginComponent.propTypes = {
