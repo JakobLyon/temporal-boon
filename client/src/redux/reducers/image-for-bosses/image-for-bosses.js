@@ -3,7 +3,7 @@ import { types } from "../../actions/types";
 import abyssalCommander from "../../../raids/theeternalpalace/AbyssalCommanderSivara";
 import blackwaterBehemoth from "../../../raids/theeternalpalace/BlackwaterBehemoth";
 
-const getImages = () => {
+export const getImages = () => {
   return {
     [abyssalCommander.name]: abyssalCommander.bannerImage,
     [blackwaterBehemoth.name]: blackwaterBehemoth.bannerImage
