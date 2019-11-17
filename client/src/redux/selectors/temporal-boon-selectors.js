@@ -299,3 +299,12 @@ export const getCompleteTimelineData = createSelector(
     }));
   }
 );
+
+const getBossImages = state => state.imagesForBosses;
+
+export const getImageForSelectedBoss = createSelector(
+  [selectedBoss, getBossImages],
+  (bossName, bossImages) => {
+    return bossImages[bossName];
+  }
+);
