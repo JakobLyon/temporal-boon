@@ -1,4 +1,4 @@
-import selectedBossReducer, { defaultBoss } from "./selected-boss";
+import { selectedBossReducer, defaultBoss } from "./selected-boss";
 import { types } from "../../actions/types";
 
 describe("Selected Boss Reducer", () => {
@@ -11,7 +11,7 @@ describe("Selected Boss Reducer", () => {
     const newBoss = "newBoss";
     const newState = selectedBossReducer(undefined, {
       type: types.SET_BOSS,
-      boss: newBoss 
+      boss: newBoss
     });
     expect(newState).toEqual(newBoss);
   });
