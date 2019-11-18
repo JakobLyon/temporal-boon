@@ -63,3 +63,43 @@ export const defaultSpells = {
     frequencyOrTrigger: "Every 30 seconds while on platform."
   }
 };
+
+export const healerSpells = {
+  Wings: {
+    name: "Wings",
+    cooldown: 90,
+    id: 1
+  },
+  "Holy Shock": {
+    name: "Holy Shock",
+    cooldown: 60,
+    id: 2
+  },
+  Ascension: {
+    name: "Ascension",
+    cooldown: 120,
+    id: 3
+  },
+  "Healing Tide Totem": {
+    name: "Healing Tide Totem",
+    cooldown: 60,
+    id: 4
+  }
+};
+
+export const healerTypes = {
+  "Holy Paladin": {
+    name: "Holy Paladin",
+    id: 1,
+    spells: ["Wings", "Holy Shock"]
+  },
+  "Resto Shaman": {
+    name: "Resto Shaman",
+    id: 2,
+    spells: ["Ascension", "Healing Tide Totem"]
+  },
+  "Disc Priest": {
+    name: "Disc Priest",
+    id: 3
+  }
+};

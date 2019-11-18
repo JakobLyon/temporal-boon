@@ -1,16 +1,16 @@
-export const SET_BOSS = "SET_BOSS";
-export const ADD_ACTIVE_HEALER = "ADD_ACTIVE_HEALER";
-export const CHANGE_ACTIVE_HEALER = "CHANGE_ACTIVE_HEALER";
-
-// Timeline action types
-export const ADD_TIMELINE_ROW = "ADD_TIMELINE_ROW";
-export const UPDATE_TIMELINE_BOSS_SPELL = "UPDATE_TIMELINE_BOSS_SPELL";
-export const UPDATE_TIMING = "UPDATE_TIMING";
-export const UPDATE_NOTES = "UPDATE_NOTES";
-export const ADD_HEALER_SPELL = "ADD_HEALER_SPELL";
-
-export const LOG_IN = "LOG_IN";
-export const LOG_OUT = "LOG_OUT";
+import { types } from "./types";
+const {
+  SET_BOSS,
+  ADD_ACTIVE_HEALER,
+  CHANGE_ACTIVE_HEALER,
+  ADD_TIMELINE_ROW,
+  UPDATE_TIMELINE_BOSS_SPELL,
+  UPDATE_TIMING,
+  UPDATE_NOTES,
+  ADD_HEALER_SPELL,
+  LOG_IN,
+  LOG_OUT
+} = types;
 
 export const setBoss = boss => ({
   type: SET_BOSS,
@@ -97,8 +97,8 @@ export const addHealerSpell = (
 
 export const logIn = () => ({
   type: LOG_IN
-})
+});
 
 export const logOut = () => ({
   type: LOG_OUT
-})
+});
