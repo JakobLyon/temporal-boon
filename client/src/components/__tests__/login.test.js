@@ -1,5 +1,5 @@
 import React from "react";
-import { Login } from "../login";
+import { Login } from "../core/login/login";
 import { mount } from "enzyme";
 
 describe("<Login/>", () => {
