@@ -1,0 +1,19 @@
+.button {
+  width: 9rem;
+  text-transform: uppercase;
+  background: #fff;
+  color: #777;
+  border-radius: 10rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  transition: all 0.2s;
+  padding: 10px;
+  border: none;
+  &:hover {
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.2);
+    transform: translateY(-0.5rem);
+  }
+  &:active {
+    box-shadow: 0 1rem 0.5rem rgba(0, 0, 0, 0.2);
+  }
+}

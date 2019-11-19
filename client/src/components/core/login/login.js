@@ -1,62 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Radium from "radium";
+import "./login.scss";
+import { Button } from "../button/button";
 
-const styles = {
-  login: {
-    width: "300px",
-    height: "200px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    fontSize: "1.6rem",
-    background:
-      "linear-gradient(to bottom right, rgba(0, 0, 0, 0.7), rgb(200, 200, 200))",
-    padding: "0 3rem"
-  },
-  errorMessage: {},
-  username: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginBotton: ".5rem"
-  },
-  username__label: {},
-  username__input: {},
-  password: {
-    display: "flex",
-    justifyContent: "space-between"
-  },
-  password__label: {},
-  password__input: {},
-  buttons: {
-    display: "flex",
-    justifyContent: "space-around"
-  },
-  buttons__login_button: {},
-  buttons__create_button: {},
-  button: {
-    width: "9rem",
-    textTransform: "uppercase",
-    background: "#fff",
-    color: "#777",
-    borderRadius: "10rem",
-    boxShadow: "0 1rem 2rem rgba(0,0,0,0.2)",
-    textDecoration: "none",
-    transition: "all 0.2s",
-    padding: "10px",
-    border: "none",
-    ":hover": {
-      boxShadow: "0 10px 10px rgba(0,0,0,0.2)",
-      transform: "translateY(-5px)"
-    },
-    ":active": {
-      boxShadow: "0 10px 5px rgba(0,0,0,0.2)",
-      transform: "translateY(-5px)"
-    }
-  }
-};
-
-class LoginComponent extends React.Component {
+export class Login extends React.Component {
   static propTypes = {
     handleLogIn: PropTypes.func,
     handleCreateUser: PropTypes.func
@@ -114,14 +61,14 @@ class LoginComponent extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} style={[styles.login]}>
+      <form onSubmit={this.handleSubmit} className="login">
         {this.state.error && (
-          <div data-enzyme-id="error-message" style={[styles.errorMessage]}>
+          <div data-enzyme-id="error-message" className="login__error-message">
             {this.state.errorMessage}
           </div>
         )}
-        <div style={[styles.username]}>
-          <label htmlFor="username" style={[styles.username__label]}>
+        <div className="login__username-container">
+          <label htmlFor="username" className="login__username-label">
             Username:{" "}
           </label>
           <input
@@ -130,11 +77,11 @@ class LoginComponent extends React.Component {
             id="username"
             value={this.state.username}
             onChange={event => this.setState({ username: event.target.value })}
-            style={[styles.username__input]}
+            className="login__username-input"
           />
         </div>
-        <div style={[styles.password]}>
-          <label htmlFor="password" style={[styles.password__label]}>
+        <div className="login__password-container">
+          <label htmlFor="password" className="login__password-label">
             Password:{" "}
           </label>
           <input
@@ -143,30 +90,24 @@ class LoginComponent extends React.Component {
             id="password"
             value={this.state.password}
             onChange={event => this.setState({ password: event.target.value })}
-            style={[styles.password__input]}
+            className="login__password-input"
           />
         </div>
-        <div style={[styles.buttons]}>
-          <button
+        <div className="login__buttons">
+          <Button
             onClick={this.loginUser}
-            style={[styles.buttons__login_button, styles.button]}
-            key="login-button"
             data-enzyme-id="login-button"
           >
             Login
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={this.createUser}
-            style={[styles.buttons__create_button, styles.button]}
-            key="create"
             data-enzyme-id="create-button"
           >
             Create
-          </button>
+          </Button>
         </div>
       </form>
     );
   }
 }
-
-export const Login = Radium(LoginComponent);

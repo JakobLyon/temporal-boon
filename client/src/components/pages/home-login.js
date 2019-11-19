@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Login } from "../login";
+import { Login } from "../core/login/login";
 import { Redirect } from "react-router-dom";
 import "./home-login.scss";
 
@@ -39,7 +39,6 @@ HomeLoginComponent.defaultProps = {
 
 export default HomeLoginComponent;
 
-export const HomeLogin = connect(
-  mapStateToProps,
-  { logIn, createUser }
-)(HomeLoginComponent);
+export const HomeLogin = connect(mapStateToProps, { logIn, createUser })(
+  HomeLoginComponent
+);

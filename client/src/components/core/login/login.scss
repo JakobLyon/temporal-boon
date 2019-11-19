@@ -1,0 +1,43 @@
+.login {
+  width: 300px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  font-size: 1.6rem;
+  background: linear-gradient(
+    to bottom right,
+    rgba(0, 0, 0, 0.7),
+    rgb(200, 200, 200)
+  );
+  padding: 0 3rem;
+
+  &__errorMessage {
+  }
+
+  &__username-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  &__username-label {
+  }
+
+  &__username-input {
+  }
+
+  &__password-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__password-label {
+  }
+  &__password-input {
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+}
