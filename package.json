@@ -8,11 +8,12 @@
     "husky": "^3.0.9"
   },
   "scripts": {
-    "test": "cd client && set CI=true && npm test"
+    "test": "cd client && set CI=true && yarn test --watchAll=false"
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm test"
+      "pre-commit": "yarn test",
+      "pre-push": "yarn test"
     }
   },
   "author": "Jakob Lyon",
