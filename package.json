@@ -8,7 +8,7 @@
     "husky": "^3.0.9"
   },
   "scripts": {
-    "test": "cd client && set CI=true && npm test -- --coverage"
+    "test": "cd client && set CI=true && npm test"
   },
   "husky": {
     "hooks": {
